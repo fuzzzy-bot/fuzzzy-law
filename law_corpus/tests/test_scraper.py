@@ -1,0 +1,156 @@
+"""Tests for the scraper module."""
+
+from __future__ import annotations
+
+import pytest
+
+from pipeline.scraper.matsne_scraper import SEED_LAWS, MatsneScraper
+from pipeline.scraper.rate_limiter import RateLimiter
+
+
+class TestRateLimiter:
+    """Test the adaptive rate limiter."""
+
+    @pytest.mark.asyncio
+    async def test_basic_acquire(self) -> None:
+        limiter = RateLimiter(min_delay=0.01, max_delay=1.0)
+        await limiter.acquire("test.com")
+        # Should complete without error
+
+    @pytest.mark.asyncio
+    async def test_backoff_increases(self) -> None:
+        limiter = RateLimiter(min_delay=0.01, max_delay=1.0, backoff_factor=2.0)
+        assert limiter._current_delay["test.com"] == 0.01
+        limiter.report_error("test.com")
+        assert limiter._current_delay["test.com"] == 0.02
+        limiter.report_error("test.com")
+        assert limiter._current_delay["test.com"] == 0.04
+
+    @pytest.mark.asyncio
+    async def test_success_resets_delay(self) -> None:
+        limiter = RateLimiter(min_delay=0.01, max_delay=1.0)
+        limiter.report_error("test.com")
+        limiter.report_error("test.com")
+        limiter.report_success("test.com")
+        assert limiter._current_delay["test.com"] == 0.01
+
+    @pytest.mark.asyncio
+    async def test_max_delay_cap(self) -> None:
+        limiter = RateLimiter(min_delay=0.01, max_delay=0.1, backoff_factor=10.0)
+        limiter.report_error("test.com")
+        limiter.report_error("test.com")
+        limiter.report_error("test.com")
+        assert limiter._current_delay["test.com"] <= 0.1
+
+
+class TestSeedLaws:
+    """Verify the seed law list is properly configured."""
+
+    def test_seed_laws_not_empty(self) -> None:
+        assert len(SEED_LAWS) >= 10
+
+    def test_p0_laws_present(self) -> None:
+        p0 = [l for l in SEED_LAWS if l["priority"] == "P0"]
+        assert len(p0) >= 8  # Constitution + 7 codes
+
+    def test_all_seeds_have_required_fields(self) -> None:
+        for law in SEED_LAWS:
+            assert "document_id" in law
+            assert "url" in law
+            assert "title_ka" in law
+            assert "priority" in law
+            assert law["url"].startswith("https://matsne.gov.ge")
+
+    def test_unique_document_ids(self) -> None:
+        ids = [l["document_id"] for l in SEED_LAWS]
+        assert len(ids) == len(set(ids)), "Duplicate document IDs in seed data"
+
+
+MATSNE_HEADER_HTML = """
+<html><body>
+<div class="document-header-mini hidden-print">
+  <div style="min-width: 80px;" title="დოკუმენტის ნომერი">1106</div>
+</div>
+<select class="form-control" id="publication-switcher">
+  <option selected value="178">24/06/2026</option>
+  <option value="177">09/12/2025</option>
+</select>
+<div class="document" id="maindoc">
+  {notice}
+  <p class="muxlixml"><a class="oldStyleDocumentPart" name="part_1">მუხლი 1. სფერო</a></p>
+</div>
+</body></html>
+"""
+
+
+class TestVersionInfo:
+    """The consolidated version shown on the page is recorded for citations."""
+
+    def test_reads_selected_publication_and_number(self) -> None:
+        info = MatsneScraper.extract_version_info(MATSNE_HEADER_HTML.format(notice=""))
+        assert info["publication_id"] == "178"
+        assert info["version_date"] == "2026-06-24"
+        assert info["document_number"] == "1106"
+        assert info["lost_force_notice"] is None
+
+    def test_flags_an_act_that_lost_force(self) -> None:
+        notice = (
+            '<p><a class="DocumentLink" href="document:5827307^DOCUMENT:1;^x">'
+            "<i><b>(ძალადაკარგულია - 14.06.2023, №3144)</b></i></a></p>"
+        )
+        info = MatsneScraper.extract_version_info(MATSNE_HEADER_HTML.format(notice=notice))
+        assert info["lost_force_notice"].startswith("(ძალადაკარგულია")
+        assert info["replaced_by_matsne_id"] == "5827307"
+
+
+class TestPoliteness:
+    """robots.txt Crawl-delay can only slow the scraper down."""
+
+    def test_crawl_delay_raises_min_delay(self) -> None:
+        limiter = RateLimiter(min_delay=2.0)
+        limiter.honour_crawl_delay("matsne.gov.ge", 10.0)
+        assert limiter.min_delay == 10.0
+        assert limiter._current_delay["matsne.gov.ge"] == 10.0
+        limiter.report_success("matsne.gov.ge")
+        assert limiter._current_delay["matsne.gov.ge"] == 10.0
+
+    def test_crawl_delay_never_lowers_delay(self) -> None:
+        limiter = RateLimiter(min_delay=12.0)
+        limiter.honour_crawl_delay("matsne.gov.ge", 10.0)
+        assert limiter.min_delay == 12.0
+
+    async def test_a_retry_waits_its_turn_like_any_request(self, monkeypatch) -> None:
+        """A retry after a failed connection is paced, not sent a moment later."""
+        import httpx
+        from tenacity import wait_none
+
+        from pipeline.scraper.session_manager import SessionManager
+
+        turns: list[str] = []
+        calls: list[str] = []
+
+        class CountingLimiter(RateLimiter):
+            async def acquire(self, host: str) -> None:
+                turns.append(host)
+
+        def handler(request: httpx.Request) -> httpx.Response:
+            calls.append(str(request.url))
+            if len(calls) < 3:
+                raise httpx.ConnectError("refused", request=request)
+            return httpx.Response(200, text="ok")
+
+        monkeypatch.setattr(SessionManager._get_with_retry.retry, "wait", wait_none())
+        async with SessionManager(CountingLimiter(min_delay=10.0)) as session:
+            await session._client.aclose()
+            session._client = httpx.AsyncClient(transport=httpx.MockTransport(handler))
+            response = await session.get("https://example.org/page")
+
+        assert response.text == "ok"
+        assert len(calls) == 3
+        assert turns == ["example.org"] * 3
+
+    def test_user_agent_identifies_operator(self) -> None:
+        from pipeline.config import settings
+
+        assert "Fuzzy Core" in settings.scrape_user_agent
+        assert "@" in settings.scrape_user_agent

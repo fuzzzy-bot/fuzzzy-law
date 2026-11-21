@@ -1,0 +1,13 @@
+# Court collection scripts and development tools (exact versions).
+#   pip install --no-deps -r requirements-refresh.txt -r requirements-dev.txt
+# PyMuPDF reads the Supreme Court's collection PDFs
+# (scripts/extract_supreme_collections.py). It is licensed AGPL-3.0 (or a
+# commercial licence from Artifex); it is installed, never bundled here.
+iniconfig==2.3.1
+packaging==26.3
+pluggy==1.7.0
+Pygments==2.21.0
+PyMuPDF==1.26.5
+pytest==9.1.1
+pytest-asyncio==1.4.0
+ruff==0.17.2

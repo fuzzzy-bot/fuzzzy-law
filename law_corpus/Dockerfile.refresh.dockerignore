@@ -1,0 +1,7 @@
+# Only the pipeline code and four scripts go into the refresh image.
+*
+!requirements-refresh.txt
+!pipeline
+!scripts
+**/__pycache__
+**/*.pyc

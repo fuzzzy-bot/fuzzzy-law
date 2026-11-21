@@ -1,0 +1,26 @@
+# The daily refresh of the public law connector's law store, nothing else.
+# It reads each stored law's current page from matsne.gov.ge, rebuilds the
+# store beside the served one and swaps it in only after every check passes.
+# No database, vector store or model key.
+#
+#   docker compose -f ../backend/docker-compose.connector.yml \
+#     --profile refresh run --rm refresh
+FROM python:3.11.15-slim-bookworm
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+
+WORKDIR /srv
+COPY requirements-refresh.txt .
+RUN pip install --no-cache-dir --no-deps -r requirements-refresh.txt && pip check
+
+COPY pipeline ./pipeline
+COPY scripts/daily_refresh.py scripts/build_article_store.py \
+     scripts/verify_article_store.py scripts/law_history.py ./scripts/
+
+# Its own user: the connector (10001) only ever reads what this one writes.
+RUN useradd --system --uid 10002 --no-create-home refresh
+USER refresh
+
+ENTRYPOINT ["python", "scripts/daily_refresh.py", "--data-dir", "/data", "--work-dir", "/work"]
