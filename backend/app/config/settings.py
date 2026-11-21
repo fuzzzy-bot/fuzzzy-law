@@ -84,6 +84,12 @@ class Settings(BaseSettings):
         description="Comma-separated Host values the MCP endpoint accepts "
                     "(DNS-rebinding protection). Empty = any host.",
     )
+    connector_cors_origins: str = Field(
+        default="",
+        description="Comma-separated web origins allowed to read the coverage "
+                    "endpoint from a browser (the project website). Empty = none.",
+    )
+
     @property
     def connector_allowed_host_list(self) -> list[str]:
         """Parse comma-separated connector hosts into a list."""
@@ -93,6 +99,11 @@ class Settings(BaseSettings):
     def connector_shared_networks(self) -> list[str]:
         """Parse the comma-separated provider networks into a list."""
         return [n.strip() for n in self.connector_shared_ip_ranges.split(",") if n.strip()]
+
+    @property
+    def connector_cors_origin_list(self) -> list[str]:
+        """Parse the comma-separated website origins into a list."""
+        return [o.strip() for o in self.connector_cors_origins.split(",") if o.strip()]
 
     @property
     def data_dir(self) -> Path:

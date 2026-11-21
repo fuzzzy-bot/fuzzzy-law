@@ -155,3 +155,26 @@ class TestEndpoints:
             "/api/v1/connector/articles", params={"code": "civil_code", "article": "137"}
         ).json()
         assert rest == connector_service.get_article("civil_code", "137").model_dump(mode="json")
+
+
+class TestCoverageForTheWebsite:
+    SITE = "https://law.fuzzzycore.com"
+
+    def test_allowed_origin_may_read_it(self, client, monkeypatch):
+        monkeypatch.setattr(settings, "connector_cors_origins", f"{self.SITE},https://x.web.app")
+        response = client.get("/api/v1/connector/coverage", headers={"origin": self.SITE})
+        assert response.status_code == 200
+        assert response.headers["access-control-allow-origin"] == self.SITE
+        assert response.headers["cache-control"] == "public, max-age=3600"
+        assert "Origin" in response.headers["vary"]
+
+    def test_other_origins_get_no_permission(self, client, monkeypatch):
+        monkeypatch.setattr(settings, "connector_cors_origins", self.SITE)
+        response = client.get("/api/v1/connector/coverage", headers={"origin": "https://evil.example"})
+        assert response.status_code == 200
+        assert "access-control-allow-origin" not in response.headers
+
+    def test_only_the_coverage_endpoint_is_opened(self, client, monkeypatch):
+        monkeypatch.setattr(settings, "connector_cors_origins", self.SITE)
+        response = client.get("/api/v1/connector/codes", headers={"origin": self.SITE})
+        assert "access-control-allow-origin" not in response.headers

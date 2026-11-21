@@ -34,6 +34,8 @@ services:
       CONNECTOR_PUBLIC_BASE_URL: ${CONNECTOR_PUBLIC_BASE_URL:-https://law-api.fuzzzycore.com}
       # Host names the MCP endpoint answers to (comma-separated; empty = any).
       CONNECTOR_ALLOWED_HOSTS: ${CONNECTOR_ALLOWED_HOSTS:-}
+      # Web origins that may read /api/v1/connector/coverage from a browser.
+      CONNECTOR_CORS_ORIGINS: ${CONNECTOR_CORS_ORIGINS:-https://law.fuzzzycore.com,https://fuzzzylaw.web.app}
       CONNECTOR_RATE_LIMIT_PER_MINUTE: ${CONNECTOR_RATE_LIMIT_PER_MINUTE:-30}
       CONNECTOR_SHARED_RATE_LIMIT_PER_MINUTE: ${CONNECTOR_SHARED_RATE_LIMIT_PER_MINUTE:-600}
       # Networks AI providers call from for many people at once (CIDR, comma-separated).

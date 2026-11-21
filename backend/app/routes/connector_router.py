@@ -13,7 +13,7 @@ from __future__ import annotations
 
 from typing import Annotated
 
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Query, Request, Response
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import HTMLResponse
 
@@ -175,9 +175,20 @@ async def verify_citation(body: VerifyCitationRequest) -> VerifyCitationResult:
     )
 
 
+# The project website reads the coverage numbers from a browser. Only the
+# origins in CONNECTOR_CORS_ORIGINS may, and a browser keeps the answer an hour,
+# so page visits do not each reach the server.
+COVERAGE_CACHE = "public, max-age=3600"
+
+
 @router.get("/coverage", operation_id="getCoverage", summary="What the service holds")
-async def get_coverage() -> CoverageResult:
+async def get_coverage(request: Request, response: Response) -> CoverageResult:
     """The laws and court decisions held, their dates, and what is not held."""
+    origin = request.headers.get("origin")
+    if origin and origin in settings.connector_cors_origin_list:
+        response.headers["Access-Control-Allow-Origin"] = origin
+    response.headers["Vary"] = "Origin"
+    response.headers["Cache-Control"] = COVERAGE_CACHE
     return get_law_connector_service().get_coverage()
 
 
