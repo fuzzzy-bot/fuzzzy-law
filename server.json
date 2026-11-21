@@ -1,0 +1,18 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.fuzzzycore.law/georgian-law",
+  "title": "Fuzzzy Law: Georgian law",
+  "description": "Exact text of Georgian laws from matsne.gov.ge and published court decisions, with official links",
+  "version": "1.0.0",
+  "websiteUrl": "https://law.fuzzzycore.com",
+  "repository": {
+    "url": "https://github.com/fuzzzy-bot/fuzzzy-law",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://law-api.fuzzzycore.com/mcp"
+    }
+  ]
+}
