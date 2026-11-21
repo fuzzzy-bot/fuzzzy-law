@@ -306,6 +306,11 @@ def section_ids(page: str) -> list[str]:
     return re.findall(r'\sid="([a-z0-9-]+)"', page)
 
 
+# IndexNow (Bing, Yandex, Seznam, Naver): a public key file at the site root lets us tell
+# those search engines when pages change, with no account. The key is public by design.
+INDEXNOW_KEY_FILE = "11fad8a523a2e63253ca3812fef782fc.txt"
+
+
 def build(args: argparse.Namespace) -> None:
     settings = json.loads((SRC / "site.json").read_text(encoding="utf-8"))
     names_en = json.loads((SRC / "law-names-en.json").read_text(encoding="utf-8"))["names"]
@@ -383,7 +388,8 @@ def build(args: argparse.Namespace) -> None:
     (DIST / "404.html").write_text(not_found, encoding="utf-8")
 
     for name in ("robots.txt", "favicon.svg", "favicon.png", "apple-touch-icon.png",
-                 "icon-512.png", "og-ka.png", "og-en.png", "flutter_service_worker.js"):
+                 "icon-512.png", "og-ka.png", "og-en.png", "flutter_service_worker.js",
+                 INDEXNOW_KEY_FILE):
         shutil.copyfile(SRC / name, DIST / name)
 
     # The sitemap tells search engines when the pages last changed: the build day.
