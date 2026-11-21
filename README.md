@@ -4,7 +4,7 @@
 
 [ქართული](#ქართული) · [English](#english) · [For developers](#for-developers)
 
-Website: https://law.fuzzzycore.com · Connector address: `https://law-api.fuzzzycore.com/mcp`
+Website: https://law.fuzzzycore.com (also https://fuzzzylaw.web.app) · Connector address: `https://law-api.fuzzzycore.com/mcp`
 
 ---
 
