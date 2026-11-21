@@ -19,50 +19,18 @@ SERVER_HEADER = (
     "earlier wordings and court decisions. Answer from them."
 )
 
-# The short working rules, English and Georgian side by side. They make up the
-# instructions the server sends when a client connects and the "send this to
-# your assistant" message, so the two can never disagree.
-WORK_RULES: tuple[tuple[str, str], ...] = (
-    (
-        "If someone may be in immediate danger, give 112 first.",
-        "თუ ვინმე შეიძლება ახლავე საფრთხეში იყოს, პირველ რიგში მიეცი ნომერი 112.",
-    ),
-    (
-        "If the answer depends on facts you lack (dates, documents), ask, or say so.",
-        "თუ პასუხი დამოკიდებულია ფაქტებზე, რომლებიც არ იცი (თარიღები, დოკუმენტები), იკითხე ან თქვი ეს.",
-    ),
-    (
-        "search_law in Georgian legal terms; if results are off the point, retry with the law's own word (ოჯახში ძალადობა, not ქმარი მცემს), ignore unfitting also_searched terms, follow references to other laws. Read each article used with get_article.",
-        "მოძებნე search_law-ით, ქართული სამართლებრივი ტერმინებით. თუ შედეგები საკითხს არ ეხება, ხელახლა მოძებნე იმ სიტყვით, რომელსაც კანონი იყენებს („ოჯახში ძალადობა“ და არა „ქმარი მცემს“), also_searched-ის შეუსაბამო ტერმინები არ გაითვალისწინო და თუ მუხლი სხვა კანონზე მიუთითებს, ისიც წაიკითხე. ყოველი მუხლი, რომელსაც ეყრდნობი, წაიკითხე get_article-ით.",
-    ),
-    (
-        "For a past event use as_of: the newest matsne version dated on or before that day, whose changes may take effect later; give its date. Say if the earlier wording is not held.",
-        "წარსულის ამბავზე გადაეცი as_of: მიიღებ matsne-ის უახლეს რედაქციას, რომლის თარიღიც იმ დღეს ან მანამდეა, და მისი ცვლილებები შეიძლება მოგვიანებით ამოქმედდა, ამიტომ მიუთითე რედაქციის თარიღი. თუ ადრინდელი რედაქცია არ ინახება, ეს თქვი.",
-    ),
-    (
-        "Read a decision with get_court_decision before describing it; say if an article it applied changed since. If the status is none_found, write: \"I found no published decision on this in the collections this service holds, up to <decisions_through>; this does not mean none exists.\"",
-        "find_court_practice-ით ნაპოვნი გადაწყვეტილება აღწერამდე წაიკითხე get_court_decision-ით და თქვი, თუ მასში გამოყენებული მუხლი მას შემდეგ შეიცვალა. თუ სტატუსია none_found, დაწერე: „ამ საკითხზე გამოქვეყნებული გადაწყვეტილება ვერ ვიპოვე ამ სერვისის კრებულებში (<decisions_through>-მდე); ეს არ ნიშნავს, რომ ასეთი არ არსებობს.“",
-    ),
-    (
-        "Answer only from tool results: quote word for word in quotation marks; name law, article and paragraph; give link, version_date and data_current_as_of; never invent articles, paragraphs or case numbers. get_coverage lists what is not held.",
-        "უპასუხე მხოლოდ ხელსაწყოების შედეგებით. ტექსტი მოიყვანე სიტყვასიტყვით, ბრჭყალებში; დაასახელე კანონი, მუხლი და პუნქტი; მიუთითე ბმული, version_date და data_current_as_of; არასოდეს მოიგონო მუხლი, პუნქტი ან საქმის ნომერი. get_coverage გეტყვის, რა არ ინახება.",
-    ),
-    (
-        "Check deadlines, amounts and ages with get_article; say what event starts each deadline. verify_citation checks quotes against the whole article: confirm the paragraph yourself.",
-        "ყოველი ვადა, თანხა და ასაკი შეამოწმე get_article-ით; თქვი, რომელი მოვლენიდან აითვლება ვადა. verify_citation ციტატას მთელ მუხლში ეძებს და არა მხოლოდ პუნქტში: პუნქტი თავად გადაამოწმე.",
-    ),
-    (
-        "Be balanced: what helps the person, what the other side can argue, what needs evidence; never promise an outcome or lean towards the person because they ask.",
-        "აჩვენე ორივე მხარე: რა უჭერს მხარს ადამიანს, რას იტყვის მეორე მხარე, რა არის მტკიცებულებებზე დამოკიდებული; შედეგს ნუ დაჰპირდები და ნუ გადაიხრები მისკენ მხოლოდ იმიტომ, რომ ის გეკითხება.",
-    ),
-    (
-        "Serious = court, detention, dismissal, large sums, children or violence; then, or if a deadline runs or they cannot pay a lawyer, call find_legal_aid.",
-        "სერიოზულია სასამართლო, დაკავება, სამსახურიდან გათავისუფლება, დიდი თანხა, ბავშვები ან ძალადობა; ასეთ დროს, ან თუ ვადა მიდის ან ადამიანს ადვოკატის ფული არ აქვს, გამოიძახე find_legal_aid.",
-    ),
-    (
-        "Refuse help with breaking the law or deceiving a court; offer a lawful route.",
-        "უარი თქვი კანონის დარღვევაში ან სასამართლოს მოტყუებაში დახმარებაზე; შესთავაზე კანონიერი გზა.",
-    ),
+# The short working rules the server sends every assistant when it connects.
+WORK_RULES: tuple[str, ...] = (
+    "If someone may be in immediate danger, give 112 first.",
+    "If the answer depends on facts you lack (dates, documents), ask, or say so.",
+    "search_law in Georgian legal terms; if results are off the point, retry with the law's own word (ოჯახში ძალადობა, not ქმარი მცემს), ignore unfitting also_searched terms, follow references to other laws. Read each article used with get_article.",
+    "For a past event use as_of: the newest matsne version dated on or before that day, whose changes may take effect later; give its date. Say if the earlier wording is not held.",
+    "Read a decision with get_court_decision before describing it; say if an article it applied changed since. If the status is none_found, write: \"I found no published decision on this in the collections this service holds, up to <decisions_through>; this does not mean none exists.\"",
+    "Answer only from tool results: quote word for word in quotation marks; name law, article and paragraph; give link, version_date and data_current_as_of; never invent articles, paragraphs or case numbers. get_coverage lists what is not held.",
+    "Check deadlines, amounts and ages with get_article; say what event starts each deadline. verify_citation checks quotes against the whole article: confirm the paragraph yourself.",
+    "Be balanced: what helps the person, what the other side can argue, what needs evidence; never promise an outcome or lean towards the person because they ask.",
+    "Serious = court, detention, dismissal, large sums, children or violence; then, or if a deadline runs or they cannot pay a lawyer, call find_legal_aid.",
+    "Refuse help with breaking the law or deceiving a court; offer a lawful route.",
 )
 
 CLOSING_LINE_KA = "ეს არის სამართლებრივი ინფორმაცია და არა იურიდიული კონსულტაცია."
@@ -71,10 +39,6 @@ CLOSING_LINE_EN = "This is legal information, not legal advice."
 WORK_CLOSING_EN = (
     "Reply in the user's language (Georgian by default), ending with one line: "
     f"„{CLOSING_LINE_KA}“ or \"{CLOSING_LINE_EN}\""
-)
-WORK_CLOSING_KA = (
-    "უპასუხე მომხმარებლის ენაზე (თუ სხვა არ ჩანს, ქართულად) და ბოლოს დაწერე ერთი ხაზი: "
-    f"„{CLOSING_LINE_KA}“ (ინგლისურად: \"{CLOSING_LINE_EN}\")"
 )
 
 
@@ -85,31 +49,26 @@ def _numbered(lines: list[str]) -> str:
 SERVER_INSTRUCTIONS = (
     SERVER_HEADER
     + "\n\nRules:\n"
-    + _numbered([en for en, _ in WORK_RULES])
+    + _numbered(list(WORK_RULES))
     + "\n"
     + WORK_CLOSING_EN
 )
 
-CONNECTOR_URL = "https://law-api.fuzzzycore.com/mcp"
-
+# What a person sends their assistant once, in a new chat. Two lines: use the
+# connector, and keep to what it returns. How to answer is in the connector's
+# own instructions (SERVER_INSTRUCTIONS), which every client receives on connecting.
 SEND_THIS_EN = (
-    f"You have the Fuzzzy Law connector for Georgian law ({CONNECTOR_URL}). For every "
-    "question about Georgian law in this conversation, look it up with its tools before "
-    "you answer, and follow these rules. If its tools are not available to you, tell me "
-    "and do not answer Georgian law questions from memory.\n\n"
-    + _numbered([en for en, _ in WORK_RULES])
-    + "\n"
-    + WORK_CLOSING_EN
+    "For every question about Georgian law, use the Fuzzzy Law connector and follow its "
+    "instructions; if it is not available, tell me instead of answering from memory.\n"
+    "Answer from what it returns: quote the article word for word and give the official "
+    "matsne.gov.ge link."
 )
 
 SEND_THIS_KA = (
-    f"ამ საუბარში გაქვს Fuzzzy Law-ის კონექტორი საქართველოს კანონმდებლობისთვის ({CONNECTOR_URL}). "
-    "საქართველოს კანონმდებლობის ყოველ კითხვაზე პასუხამდე ჯერ მისი ხელსაწყოებით მოძებნე და "
-    "დაიცავი ეს წესები. თუ მისი ხელსაწყოები არ გაქვს, მითხარი და საქართველოს კანონებზე "
-    "მეხსიერებიდან ნუ მიპასუხებ.\n\n"
-    + _numbered([ka for _, ka in WORK_RULES])
-    + "\n"
-    + WORK_CLOSING_KA
+    "საქართველოს კანონმდებლობის შესახებ ყოველ კითხვაზე გამოიყენე Fuzzzy Law-ის კონექტორი და "
+    "მიჰყევი მის ინსტრუქციებს; თუ ის არ გაქვს, მითხარი და მეხსიერებიდან ნუ მიპასუხებ.\n"
+    "უპასუხე მხოლოდ იმით, რასაც ის მოგცემს: მუხლი მოიყვანე სიტყვასიტყვით და მიუთითე "
+    "matsne.gov.ge-ის ოფიციალური ბმული."
 )
 
 ANSWER_RULES_EN = """\
@@ -195,9 +154,10 @@ SEND_THIS_PAGES = {
         "ახალ საუბარში ჯერ ეს ტექსტი ჩასვი და გაგზავნე. ამის შემდეგ ასისტენტი საქართველოს "
         "კანონმდებლობის კითხვებზე კონექტორის წყაროებით გიპასუხებს.\n\n"
         "```text\n{message}\n```\n\n"
-        "ეს ტექსტი კონექტორის კოდიდან იქმნება (`backend/app/services/connector_guidance.py`), "
-        "იმავე წესებიდან, რომლებსაც სერვერი ასისტენტს დაკავშირებისას უგზავნის. ხელით ნუ "
-        "შეცვლი: შეცვალე კოდი და გაუშვი `python scripts/write_client_files.py`.\n\n"
+        "როგორ უპასუხოს, ამას კონექტორი თავად ეუბნება ასისტენტს დაკავშირებისას; ეს ტექსტი "
+        "მხოლოდ იმისთვისაა, რომ ასისტენტმა კონექტორი გამოიყენოს. ტექსტი კოდიდან იქმნება "
+        "(`backend/app/services/connector_guidance.py`): შეცვალე კოდი და გაუშვი "
+        "`python scripts/write_client_files.py`.\n\n"
         "English: [send-this.en.md](send-this.en.md)\n"
     ),
     "en": (
@@ -206,9 +166,9 @@ SEND_THIS_PAGES = {
         "paste this text into a new chat and send it. From then on the assistant answers "
         "Georgian law questions from the connector's sources.\n\n"
         "```text\n{message}\n```\n\n"
-        "The text is generated from the connector's code "
-        "(`backend/app/services/connector_guidance.py`), from the same rules the server sends "
-        "an assistant when it connects. Do not edit it by hand: change the code and run "
+        "The connector itself tells the assistant how to answer when it connects; this text "
+        "only makes sure the assistant uses it. It is generated from the code "
+        "(`backend/app/services/connector_guidance.py`): change the code and run "
         "`python scripts/write_client_files.py`.\n\n"
         "ქართულად: [send-this.ka.md](send-this.ka.md)\n"
     ),

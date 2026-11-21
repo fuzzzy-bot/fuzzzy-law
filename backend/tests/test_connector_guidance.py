@@ -100,12 +100,11 @@ class TestAnswerRules:
     def test_one_rule_for_no_decision_found_everywhere(self):
         line = ("I found no published decision on this in the collections this service "
                 "holds, up to <decisions_through>; this does not mean none exists.")
-        assert line in SERVER_INSTRUCTIONS and line in ANSWER_RULES_EN and line in SEND_THIS_EN
+        assert line in SERVER_INSTRUCTIONS and line in ANSWER_RULES_EN
         assert "ეს არ ნიშნავს, რომ ასეთი არ არსებობს" in ANSWER_RULES_KA
-        assert "ეს არ ნიშნავს, რომ ასეთი არ არსებობს" in SEND_THIS_KA
         court_tool = " ".join(TOOL_DESCRIPTIONS["find_court_practice"].split())
         assert "does not mean none exists" in court_tool
-        for text in (SERVER_INSTRUCTIONS, ANSWER_RULES, SEND_THIS_EN, SEND_THIS_KA):
+        for text in (SERVER_INSTRUCTIONS, ANSWER_RULES):
             assert "must not mention court practice" not in text
             assert "including the remark that you did not look" not in text
 
@@ -126,23 +125,28 @@ class TestAnswerRules:
 
 
 class TestSendThis:
-    def test_both_languages_carry_the_same_rules(self):
-        english, georgian = _numbered_rules(SEND_THIS_EN), _numbered_rules(SEND_THIS_KA)
-        assert len(english) == len(georgian) == len(WORK_RULES)
+    """The message a person sends once: short; the rules travel in the server's instructions."""
+
+    @pytest.mark.parametrize("message", [SEND_THIS_EN, SEND_THIS_KA])
+    def test_two_short_lines(self, message: str):
+        assert len(message.splitlines()) == 2 and len(message) <= 320
 
     def test_georgian_message_is_in_georgian(self):
         letters = [ch for ch in SEND_THIS_KA if ch.isalpha()]
         assert sum(ord(ch) in GEORGIAN for ch in letters) / len(letters) > 0.6
 
-    def test_message_is_built_from_the_server_rules(self):
-        for english, _ in WORK_RULES:
-            assert english in SERVER_INSTRUCTIONS and english in SEND_THIS_EN
+    @pytest.mark.parametrize("message", [SEND_THIS_EN, SEND_THIS_KA])
+    def test_points_to_the_connector_and_its_instructions(self, message: str):
+        assert "Fuzzzy Law" in message and "matsne.gov.ge" in message
+
+    def test_the_rules_are_in_the_server_instructions_instead(self):
+        for rule in WORK_RULES:
+            assert rule in SERVER_INSTRUCTIONS
 
     @pytest.mark.parametrize("language", ["ka", "en"])
     def test_committed_page_is_the_generated_one(self, language: str):
         page = CONNECTOR_DIR.parent / "docs" / f"send-this.{language}.md"
         assert page.read_text(encoding="utf-8") == send_this_page(language)
-        assert "https://law-api.fuzzzycore.com/mcp" in page.read_text(encoding="utf-8")
 
 
 class TestCustomGptInstructions:
