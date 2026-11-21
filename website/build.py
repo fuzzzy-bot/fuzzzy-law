@@ -37,6 +37,7 @@ import re
 import shutil
 import sys
 import urllib.request
+from datetime import datetime, timezone
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -381,9 +382,15 @@ def build(args: argparse.Namespace) -> None:
     not_found = render((SRC / "404.html").read_text(encoding="utf-8"), "ka", assets, {}, {"mark": mark})
     (DIST / "404.html").write_text(not_found, encoding="utf-8")
 
-    for name in ("robots.txt", "sitemap.xml", "favicon.svg", "favicon.png", "apple-touch-icon.png",
-                 "icon-512.png", "flutter_service_worker.js"):
+    for name in ("robots.txt", "favicon.svg", "favicon.png", "apple-touch-icon.png",
+                 "icon-512.png", "og-ka.png", "og-en.png", "flutter_service_worker.js"):
         shutil.copyfile(SRC / name, DIST / name)
+
+    # The sitemap tells search engines when the pages last changed: the build day.
+    today = datetime.now(timezone.utc).date().isoformat()
+    sitemap = (SRC / "sitemap.xml").read_text(encoding="utf-8")
+    sitemap = re.sub(r"(<loc>[^<]+</loc>)", rf"\1\n    <lastmod>{today}</lastmod>", sitemap)
+    (DIST / "sitemap.xml").write_text(sitemap, encoding="utf-8")
 
     if args.our_gui:
         add_old_app(Path(args.our_gui))

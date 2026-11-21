@@ -1,0 +1,31 @@
+<!doctype html>
+<!-- The share image (1200 x 630) shown when the site is linked in chats and social posts.
+     Render: see og/README.md. Text comes from the query string: ?lang=ka or ?lang=en -->
+<html><head><meta charset="utf-8"><title>share card</title>
+<style>
+@font-face{font-family:"Inter";src:url(../src/fonts/inter-latin.woff2) format("woff2");font-weight:100 900}
+@font-face{font-family:"Noto Sans Georgian";src:url(../src/fonts/noto-sans-georgian-georgian.woff2) format("woff2");font-weight:100 900}
+@font-face{font-family:"Space Grotesk";src:url(../src/fonts/space-grotesk-latin.woff2) format("woff2");font-weight:300 700}
+@font-face{font-family:"Space Mono";src:url(../src/fonts/space-mono-latin-400.woff2) format("woff2")}
+*{margin:0;box-sizing:border-box}
+html,body{width:1200px;height:630px;overflow:hidden}
+body{background:#f2f0e9;color:#1c1b15;font-family:"Inter","Noto Sans Georgian",sans-serif;padding:64px 72px;display:flex;flex-direction:column}
+.brand{display:flex;align-items:center;gap:16px;font:600 30px "Space Grotesk","Inter",sans-serif}
+.brand svg{width:52px;height:52px}
+h1{font:700 68px/1.08 "Space Grotesk","Noto Sans Georgian",sans-serif;letter-spacing:-.01em;margin-top:56px;max-width:1000px}
+p{font-size:30px;line-height:1.35;color:#3f3d36;margin-top:24px;max-width:980px}
+.flow{display:flex;align-items:center;gap:22px;margin-top:auto;font-size:24px;color:#3f3d36}
+.box{white-space:nowrap;border:2px solid #b9b6ac;border-radius:6px;padding:12px 20px;background:#f8f7f2;color:#1c1b15}
+.box.mid{border-color:#1c1b15}
+.arrow{font-size:30px;color:#6b6961}
+.url{margin-left:auto;font:400 24px "Space Mono",monospace;color:#1c1b15}
+</style></head><body>
+<div class="brand"><svg viewBox="0 0 512 512"><circle cx="256" cy="256" r="184" fill="#b2261d"/><path fill="#0b0c0f" d="M102 148h308v22H102z"/><path fill="none" stroke="#0b0c0f" stroke-width="12" d="M176 170 128 306M176 170l48 136M336 170l-48 136M336 170l48 136"/><path fill="#0b0c0f" d="M102 306h148l-20 38H122zM262 306h148l-20 38H282z"/></svg>Fuzzzy Law</div>
+<h1 id="h"></h1><p id="p"></p>
+<div class="flow"><span class="box" id="a"></span><span class="arrow">⇄</span><span class="box mid">Fuzzzy Law</span><span class="arrow">←</span><span class="box">matsne.gov.ge</span><span class="url">law.fuzzzycore.com</span></div>
+<script>
+const t={ka:{h:"საქართველოს კანონი შენს AI ასისტენტში",p:"ChatGPT, Claude, Gemini: ზუსტი მუხლი matsne.gov.ge-დან, ოფიციალური ბმულით. უფასოდ.",a:"შენი ასისტენტი"},
+en:{h:"Georgian law inside your AI assistant",p:"ChatGPT, Claude, Gemini: the exact article from matsne.gov.ge, with the official link. Free.",a:"Your assistant"}};
+const l=new URLSearchParams(location.search).get("lang")==="en"?"en":"ka";document.documentElement.lang=l;
+for(const k of ["h","p","a"])document.getElementById(k).textContent=t[l][k];
+</script></body></html>
