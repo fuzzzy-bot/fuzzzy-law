@@ -114,6 +114,14 @@ server {
     location = /healthz/data {
         proxy_pass http://127.0.0.1:8050;
     }
+    # The bare address sends a browser to the project website; robots.txt keeps crawlers
+    # on /coverage and off the machine endpoints. Both answered by the connector.
+    location = / {
+        proxy_pass http://127.0.0.1:8050;
+    }
+    location = /robots.txt {
+        proxy_pass http://127.0.0.1:8050;
+    }
     location / {
         return 404;
     }
