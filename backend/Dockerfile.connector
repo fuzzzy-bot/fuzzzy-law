@@ -2,7 +2,7 @@
 # It reads two SQLite files from /data and needs no database, Redis or model key.
 #
 #   docker compose -f docker-compose.connector.yml up -d --build
-FROM python:3.11.15-slim-bookworm
+FROM python:3.15.2-slim-bookworm
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
