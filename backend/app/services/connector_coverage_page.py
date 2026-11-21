@@ -136,6 +136,8 @@ def _aid_cards(aid: LegalAidResult) -> str:
             facts.append(("Hours", provider.hours))
         if provider.email:
             facts.append(("Email", provider.email))
+        if provider.checked_on:
+            facts.append(("Checked", provider.checked_on))
         listed = "".join(f"<dt>{_text(k)}</dt><dd>{_text(v)}</dd>" for k, v in facts)
         cards.append(
             f'<div class="card"><strong>{_text(provider.name)}</strong>'

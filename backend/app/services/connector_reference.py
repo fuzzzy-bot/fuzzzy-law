@@ -10,9 +10,10 @@ checked it against its source. Nothing here is law text.
 from __future__ import annotations
 
 # ── Free legal help ──────────────────────────────────────────
-# Checked on the date below against legalaid.ge (contact page), ombudsman.ge
-# and the Law of Georgia on Legal Aid (matsne.gov.ge document 21604).
-LEGAL_AID_CHECKED_ON = "2026-11-14"
+# Each contact carries the day a person last checked it and where. On
+# 2026-11-21 legalaid.ge did not answer, so the Legal Aid Service's phone keeps
+# its check of 2026-11-14; the rest were checked that day against the sources named.
+LEGAL_AID_CHECKED_ON = "2026-11-21"
 
 LEGAL_AID_PROVIDERS = [
     {
@@ -22,50 +23,95 @@ LEGAL_AID_PROVIDERS = [
             "documents and a lawyer in court for people who qualify."
         ),
         "free_for": (
-            "Consultation: everyone. A lawyer at the state's expense: people registered "
-            "as socially vulnerable (insolvent) and the other cases the law names; the "
-            "service decides on application."
+            "Consultation: everyone. Every minor: free legal consultation and legal aid, "
+            "unless a lawyer the minor hired is on the case (Law on Legal Aid, article 4¹). "
+            "A lawyer at the state's expense: people registered as socially vulnerable "
+            "(insolvent) and the other cases the law names; the service decides on "
+            "application."
         ),
         "phone": "1485 (or 032 292 00 55)",
         "hours": "Phone consultation on working days, 10:00–18:00",
         "website": "https://www.legalaid.ge",
         "email": "info@legalaid.ge",
         "legal_basis": (
-            "Law of Georgia on Legal Aid, articles 2, 5 and 17: "
+            "Law of Georgia on Legal Aid, articles 2, 4¹, 5 and 17: "
             "https://matsne.gov.ge/ka/document/view/21604"
         ),
+        "checked_on": "2026-11-14",
+        "source": (
+            "legalaid.ge contact page (2026-11-14; the site did not answer on 2026-11-21); "
+            "article 4¹ checked on matsne.gov.ge on 2026-11-21"
+        ),
+    },
+    {
+        "name": (
+            "ძალადობის ცხელი ხაზი: სახელმწიფო ზრუნვისა და ტრეფიკინგის მსხვერპლთა, "
+            "დაზარალებულთა დახმარების სააგენტო (violence hotline: State Care and "
+            "Assistance Agency for Victims of Human Trafficking)"
+        ),
+        "helps_with": (
+            "Advice and help for victims of domestic violence and violence against women, "
+            "including a place in a shelter or crisis centre. Victims may use shelters, "
+            "crisis centres and support services free of charge, whether or not they go "
+            "to the police or a court (Law on Violence against Women and/or Domestic "
+            "Violence, article 17)."
+        ),
+        "free_for": "Everyone.",
+        "phone": "116 006",
+        "hours": None,
+        "website": "https://atipfund.gov.ge",
+        "email": None,
+        "legal_basis": (
+            "Government of Georgia decree No. 101 of 10 February 2020 (hotline 116-006): "
+            "https://matsne.gov.ge/ka/document/view/4796386; free shelter: "
+            "https://matsne.gov.ge/ka/document/view/26422"
+        ),
+        "checked_on": "2026-11-21",
+        "source": "matsne.gov.ge (the agency's own site could not be read that day)",
     },
     {
         "name": "საქართველოს სახალხო დამცველი (Public Defender of Georgia, Ombudsman)",
         "helps_with": (
             "Complaints that a state body, official or institution violated a person's "
-            "rights: ill-treatment, unlawful detention, discrimination, domestic violence."
+            "rights: ill-treatment, unlawful detention, discrimination, domestic violence, "
+            "children's rights."
         ),
         "free_for": "Everyone.",
-        "phone": "1481",
+        "phone": "1481 (from abroad: +995 32 299 58 98)",
         "hours": "Hotline around the clock; office on working days, 9:00–18:00",
         "website": "https://www.ombudsman.ge",
         "email": "info@ombudsman.ge",
         "legal_basis": None,
+        "checked_on": "2026-11-21",
+        "source": "https://www.ombudsman.ge/geo/kontaqti",
     },
     {
         "name": "საქართველოს ახალგაზრდა იურისტთა ასოციაცია (Georgian Young Lawyers' Association)",
         "helps_with": "Non-governmental organisation that gives free legal consultations.",
-        "free_for": "Everyone; see the website for its offices and current phone lines.",
-        "phone": None,
-        "hours": None,
+        "free_for": "Everyone.",
+        "phone": "032 299 50 76",
+        "hours": (
+            "In person on Thursdays, 10:00–17:00, at its Tbilisi office, and online "
+            "consultations by appointment (resumed in part on 1 September 2026)"
+        ),
         "website": "https://gyla.ge",
-        "email": None,
+        "email": "legalaid@gyla.ge",
         "legal_basis": None,
+        "checked_on": "2026-11-21",
+        "source": "https://gyla.ge/contact and https://gyla.ge/post/GYLA-LEGALAID-statement",
     },
 ]
 
-LEGAL_AID_EMERGENCY = "In immediate danger call 112 (საგანგებო ნომერი 112)."
+LEGAL_AID_EMERGENCY = (
+    "If someone may be in immediate danger, call 112 first (საგანგებო ნომერი 112). "
+    "Domestic violence or violence against women: hotline 116 006."
+)
 
 LEGAL_AID_MESSAGE = (
     "Give the person these contacts whenever the matter is serious, a deadline is "
-    "running or they cannot pay a lawyer. Phone numbers and hours can change: tell "
-    "them to confirm on the service's website. Do not promise that they qualify."
+    "running or they cannot pay a lawyer; for violence give 112 and 116 006 first. "
+    "Phone numbers and hours can change: tell them to confirm on the service's "
+    "website. Do not promise that they qualify."
 )
 
 # ── What the connector does not hold ─────────────────────────

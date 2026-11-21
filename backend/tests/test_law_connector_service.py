@@ -578,3 +578,22 @@ class TestGroundedness:
             assert item.notice == NOT_LEGAL_ADVICE
         for hit in [i for i in items if hasattr(i, "version_note") and hasattr(i, "version_date")]:
             assert hit.version_date or hit.in_force_since or hit.version_note
+
+
+class TestFreeHelpContacts:
+    def test_violence_hotline_and_emergency_first(self, connector_service):
+        result = connector_service.legal_aid()
+        assert "112" in result.emergency and "116 006" in result.emergency
+        phones = {p.phone for p in result.providers}
+        assert "116 006" in phones
+
+    def test_every_contact_says_when_and_where_it_was_checked(self, connector_service):
+        from datetime import date
+
+        for provider in connector_service.legal_aid().providers:
+            assert provider.checked_on and provider.source
+            assert date.fromisoformat(provider.checked_on) <= date.today()
+
+    def test_minors_get_free_legal_aid(self, connector_service):
+        legal_aid_service = connector_service.legal_aid().providers[0]
+        assert "Every minor" in legal_aid_service.free_for and "4¹" in legal_aid_service.free_for

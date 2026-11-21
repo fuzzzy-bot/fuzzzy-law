@@ -2144,6 +2144,30 @@
               }
             ],
             "title": "Legal Basis"
+          },
+          "checked_on": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Checked On",
+            "description": "Day a person last checked this contact against its source."
+          },
+          "source": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source",
+            "description": "Where it was checked."
           }
         },
         "type": "object",

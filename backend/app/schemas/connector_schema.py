@@ -352,6 +352,10 @@ class LegalAidProvider(BaseModel):
     website: str
     email: str | None = None
     legal_basis: str | None = None
+    checked_on: str | None = Field(
+        default=None, description="Day a person last checked this contact against its source."
+    )
+    source: str | None = Field(default=None, description="Where it was checked.")
 
 
 class LegalAidResult(BaseModel):
