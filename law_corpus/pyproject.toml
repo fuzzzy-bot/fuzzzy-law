@@ -21,3 +21,4 @@ ignore = ["E501", "E741"]
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["tests"]
+pythonpath = ["."]
