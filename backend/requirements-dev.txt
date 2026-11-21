@@ -12,9 +12,9 @@ packaging==26.3
 pathable==0.6.0
 pluggy==1.7.0
 Pygments==2.21.0
-pytest-asyncio==1.4.0
-pytest==9.1.1
+pytest-asyncio==1.5.0
+pytest==9.2.0
 PyYAML==6.0.3
 rfc3339-validator==0.1.4
-ruff==0.17.2
+ruff==0.17.5
 six==1.17.0
