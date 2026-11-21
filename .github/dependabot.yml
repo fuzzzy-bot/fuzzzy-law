@@ -4,19 +4,30 @@ updates:
     directory: /backend
     schedule:
       interval: weekly
-    open-pull-requests-limit: 5
+    groups:
+      connector-packages:
+        patterns: ["*"]
   - package-ecosystem: pip
     directory: /law_corpus
     schedule:
       interval: weekly
-    open-pull-requests-limit: 5
+    groups:
+      pipeline-packages:
+        patterns: ["*"]
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
+    groups:
+      actions:
+        patterns: ["*"]
   - package-ecosystem: docker
     directories:
       - /backend
       - /law_corpus
     schedule:
       interval: weekly
+    ignore:
+      # The images stay on Python 3.11 until the code is tested on a newer one.
+      - dependency-name: python
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
