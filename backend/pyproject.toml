@@ -1,0 +1,19 @@
+# The law connector server. Runtime packages: requirements-connector.txt
+# (exact versions). Development tools: requirements-dev.txt.
+[project]
+name = "fuzzzy-law-connector"
+version = "1.1.0"
+description = "Free, read-only MCP connector for Georgian law: exact text from matsne.gov.ge, earlier wordings and published court decisions"
+requires-python = ">=3.11"
+license = "MIT"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]

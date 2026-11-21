@@ -1,0 +1,25 @@
+# The public law connector: the MCP server and its REST mirror, nothing else.
+# It reads two SQLite files from /data and needs no database, Redis or model key.
+#
+#   docker compose -f docker-compose.connector.yml up -d --build
+FROM python:3.11.15-slim-bookworm
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+
+WORKDIR /srv
+COPY requirements-connector.txt .
+RUN pip install --no-cache-dir --no-deps -r requirements-connector.txt && pip check
+
+COPY app ./app
+
+RUN useradd --system --uid 10001 --no-create-home connector
+USER connector
+
+EXPOSE 8000
+
+# One worker: request limits are counted inside this process.
+# No access log: a request line would carry what a person asked.
+CMD ["uvicorn", "app.connector_main:app", "--host", "0.0.0.0", "--port", "8000", \
+     "--workers", "1", "--no-access-log", "--proxy-headers"]

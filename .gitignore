@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+.env
+.DS_Store
+
+# Data files are built or downloaded, never committed.
+data/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+law_corpus/data/
+connector_api_keys.json

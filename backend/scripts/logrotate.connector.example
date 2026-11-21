@@ -1,0 +1,16 @@
+# Install as /etc/logrotate.d/fuzzzy-law-connector.
+# The access log holds caller addresses and paths, never what was asked;
+# seven days is enough to handle abuse and no longer.
+/var/log/nginx/fuzzzy-law-connector/*.log {
+	daily
+	missingok
+	rotate 7
+	compress
+	delaycompress
+	notifempty
+	create 0640 www-data adm
+	sharedscripts
+	postrotate
+		invoke-rc.d nginx rotate >/dev/null 2>&1
+	endscript
+}

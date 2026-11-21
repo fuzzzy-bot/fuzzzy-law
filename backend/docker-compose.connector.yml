@@ -1,0 +1,105 @@
+# The public law connector as its own compose project, apart from the app's
+# stack: its own name, container, port and memory ceiling.
+#
+#   docker compose --env-file /srv/fuzzzy-law-connector/connector.env \
+#     -f docker-compose.connector.yml up -d --build
+#
+# CONNECTOR_DATA_PATH is the host folder holding article_store.db,
+# court_store.db and status.json. The daily refresh replaces those files there
+# (write beside, then rename); the service picks a new file up by itself.
+# CONNECTOR_WORK_PATH is the host folder holding the law pages and parsed laws
+# the store is built from; only the refresh uses it.
+#
+# The refresh is a one-shot job, started once a day by the host's scheduler:
+#
+#   docker compose --env-file /srv/fuzzzy-law-connector/connector.env \
+#     -f docker-compose.connector.yml --profile refresh run --rm refresh
+name: fuzzzy-law-connector
+
+services:
+  connector:
+    build:
+      context: .
+      dockerfile: Dockerfile.connector
+    image: fuzzzy-law-connector:local
+    container_name: fuzzzy-law-connector
+    # Reachable from this machine only; nginx in front handles HTTPS.
+    ports:
+      - "127.0.0.1:${CONNECTOR_PORT:-8050}:8000"
+    environment:
+      APP_ENV: connector
+      LOG_LEVEL: INFO
+      CONNECTOR_ACCESS_MODE: open
+      CONNECTOR_DATA_DIR: /data
+      CONNECTOR_PUBLIC_BASE_URL: ${CONNECTOR_PUBLIC_BASE_URL:-https://law-api.fuzzzycore.com}
+      # Host names the MCP endpoint answers to (comma-separated; empty = any).
+      CONNECTOR_ALLOWED_HOSTS: ${CONNECTOR_ALLOWED_HOSTS:-}
+      CONNECTOR_RATE_LIMIT_PER_MINUTE: ${CONNECTOR_RATE_LIMIT_PER_MINUTE:-30}
+      CONNECTOR_SHARED_RATE_LIMIT_PER_MINUTE: ${CONNECTOR_SHARED_RATE_LIMIT_PER_MINUTE:-600}
+      # Networks AI providers call from for many people at once (CIDR, comma-separated).
+      CONNECTOR_SHARED_IP_RANGES: ${CONNECTOR_SHARED_IP_RANGES:-}
+      # The caller's address arrives in X-Forwarded-For from nginx, which
+      # reaches the container from the Docker bridge. Trusting every sender is
+      # safe only because the port above is bound to 127.0.0.1.
+      FORWARDED_ALLOW_IPS: "*"
+    volumes:
+      - ${CONNECTOR_DATA_PATH:?set CONNECTOR_DATA_PATH to the connector data folder}:/data:ro
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 512m
+    memswap_limit: 512m
+    cpus: 1.0
+    pids_limit: 128
+    restart: unless-stopped
+    # Small, rotating logs: nothing a person asked is written, and little is kept.
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "2"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/healthz', timeout=4)"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  # Once a day: one request per stored law to matsne.gov.ge, ten seconds apart.
+  refresh:
+    profiles: ["refresh"]
+    build:
+      context: ../law_corpus
+      dockerfile: Dockerfile.refresh
+    image: fuzzzy-law-refresh:local
+    environment:
+      DATA_DIR: /work
+      CHECKPOINT_DIR: /work/georgian_laws/checkpoints
+    volumes:
+      - ${CONNECTOR_DATA_PATH:?set CONNECTOR_DATA_PATH to the connector data folder}:/data
+      - ${CONNECTOR_WORK_PATH:?set CONNECTOR_WORK_PATH to the refresh work folder}:/work
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 768m
+    memswap_limit: 768m
+    cpus: 1.0
+    pids_limit: 64
+    restart: "no"
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "2"
