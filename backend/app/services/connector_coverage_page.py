@@ -147,13 +147,20 @@ def _aid_cards(aid: LegalAidResult) -> str:
     return "".join(cards)
 
 
-def render_coverage_page(coverage: CoverageResult, aid: LegalAidResult, public_url: str) -> str:
+def render_coverage_page(
+    coverage: CoverageResult, aid: LegalAidResult, public_url: str, website_url: str = ""
+) -> str:
     """The coverage page as one HTML document.
 
     ``public_url`` is the origin the connector is reached at; the page prints
     the connector address under it.
     """
     endpoint = public_url.rstrip("/") + "/mcp"
+    website = (
+        f"<p>How to connect your assistant: "
+        f"{_link(website_url, website_url.removeprefix('https://'))}.</p>"
+        if website_url else ""
+    )
     if coverage.data_current_as_of:
         stamp = (f"The stored law texts were last confirmed against matsne.gov.ge on "
                  f"<strong>{_text(coverage.data_current_as_of)}</strong>. "
@@ -233,7 +240,8 @@ is never in it.</p>
 can change; confirm them on each service's website.</p>
 
 <footer class="note">
-<p>Run by {_text(OPERATOR)}. Contact: {_link("mailto:" + CONTACT_EMAIL, CONTACT_EMAIL)}.</p>
+{website}<p>Run by {_text(OPERATOR)}.
+Contact: {_link("mailto:" + CONTACT_EMAIL, CONTACT_EMAIL)}.</p>
 </footer>
 </main>
 </body>

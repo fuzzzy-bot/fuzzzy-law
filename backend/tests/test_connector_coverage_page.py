@@ -124,3 +124,18 @@ class TestServed:
         codes = [client.get("/coverage").status_code for _ in range(4)]
         assert codes[:2] == [200, 200]
         assert 429 in codes[2:]
+
+
+class TestWebsiteLinks:
+    def test_page_links_the_website_when_set(self, connector_service):
+        page = render_coverage_page(
+            connector_service.get_coverage(), connector_service.legal_aid(), PUBLIC_URL,
+            "https://law.example.org",
+        )
+        assert '<a href="https://law.example.org"' in page
+
+    def test_no_website_link_by_default(self, connector_service):
+        page = render_coverage_page(
+            connector_service.get_coverage(), connector_service.legal_aid(), PUBLIC_URL
+        )
+        assert "How to connect your assistant" not in page

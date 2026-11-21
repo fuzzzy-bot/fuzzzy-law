@@ -289,6 +289,22 @@ class TestHealth:
         assert response.json()["status"] == "law_store_unavailable"
 
 
+class TestRootAndRobots:
+    def test_root_redirects_to_the_website_when_set(self, client, monkeypatch):
+        monkeypatch.setattr(settings, "connector_website_url", "https://law.example.org")
+        response = client.get("/", follow_redirects=False)
+        assert response.status_code == 301
+        assert response.headers["location"] == "https://law.example.org"
+
+    def test_root_is_not_found_without_a_website(self, client, monkeypatch):
+        monkeypatch.setattr(settings, "connector_website_url", "")
+        assert client.get("/", follow_redirects=False).status_code == 404
+
+    def test_robots_keeps_crawlers_off_the_machine_endpoints(self, client):
+        text = client.get("/robots.txt").text
+        assert "Allow: /coverage" in text and "Disallow: /mcp" in text and "Disallow: /api/" in text
+
+
 class TestDefaultLimit:
     def test_default_limit_is_sixty_a_minute(self):
         from app.config.settings import Settings

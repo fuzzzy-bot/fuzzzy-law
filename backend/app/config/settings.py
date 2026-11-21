@@ -84,6 +84,11 @@ class Settings(BaseSettings):
         description="Comma-separated Host values the MCP endpoint accepts "
                     "(DNS-rebinding protection). Empty = any host.",
     )
+    connector_website_url: str = Field(
+        default="",
+        description="The project's website. When set, the connector's root address "
+                    "redirects there and the coverage page links to it. Empty = neither.",
+    )
     connector_cors_origins: str = Field(
         default="",
         description="Comma-separated web origins allowed to read the coverage "

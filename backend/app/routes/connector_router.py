@@ -219,6 +219,7 @@ async def coverage_page() -> HTMLResponse:
     """What the connector holds, as a web page for people."""
     service = get_law_connector_service()
     page = render_coverage_page(
-        service.get_coverage(), service.legal_aid(), settings.connector_public_base_url
+        service.get_coverage(), service.legal_aid(), settings.connector_public_base_url,
+        settings.connector_website_url,
     )
     return HTMLResponse(page, headers=PAGE_HEADERS)

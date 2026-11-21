@@ -20,7 +20,7 @@ import logging
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, PlainTextResponse, RedirectResponse, Response
 
 from app.config.settings import settings
 from app.middleware.connector_error_middleware import ConnectorErrorMiddleware
@@ -36,7 +36,24 @@ def create_connector_app() -> FastAPI:
     app.add_middleware(ConnectorErrorMiddleware)
     app.add_api_route("/healthz", healthz, methods=["GET"], include_in_schema=False)
     app.add_api_route("/healthz/data", data_health, methods=["GET"], include_in_schema=False)
+    app.add_api_route("/", root, methods=["GET", "HEAD"], include_in_schema=False)
+    app.add_api_route("/robots.txt", robots, methods=["GET"], include_in_schema=False)
     return app
+
+
+# Search engines may read the coverage page; the machine endpoints are of no use to them.
+ROBOTS = "User-agent: *\nAllow: /coverage\nDisallow: /mcp\nDisallow: /api/\nDisallow: /healthz\n"
+
+
+def root() -> Response:
+    """A person who opens the connector's address in a browser lands on the website."""
+    if settings.connector_website_url:
+        return RedirectResponse(settings.connector_website_url, status_code=301)
+    return JSONResponse(status_code=404, content={"detail": "Not Found"})
+
+
+def robots() -> PlainTextResponse:
+    return PlainTextResponse(ROBOTS)
 
 
 def healthz() -> JSONResponse:

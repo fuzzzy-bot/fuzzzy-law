@@ -34,6 +34,8 @@ services:
       CONNECTOR_PUBLIC_BASE_URL: ${CONNECTOR_PUBLIC_BASE_URL:-https://law-api.fuzzzycore.com}
       # Host names the MCP endpoint answers to (comma-separated; empty = any).
       CONNECTOR_ALLOWED_HOSTS: ${CONNECTOR_ALLOWED_HOSTS:-}
+      # The project website: "/" redirects there and the coverage page links to it.
+      CONNECTOR_WEBSITE_URL: ${CONNECTOR_WEBSITE_URL:-https://law.fuzzzycore.com}
       # Web origins that may read /api/v1/connector/coverage from a browser.
       CONNECTOR_CORS_ORIGINS: ${CONNECTOR_CORS_ORIGINS:-https://law.fuzzzycore.com,https://fuzzzylaw.web.app}
       CONNECTOR_RATE_LIMIT_PER_MINUTE: ${CONNECTOR_RATE_LIMIT_PER_MINUTE:-60}
