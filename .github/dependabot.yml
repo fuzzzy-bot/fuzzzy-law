@@ -1,4 +1,5 @@
 version: 2
+# Minor and patch updates come grouped; each major update comes on its own, for a closer look.
 updates:
   - package-ecosystem: pip
     directory: /backend
@@ -7,6 +8,7 @@ updates:
     groups:
       connector-packages:
         patterns: ["*"]
+        update-types: ["minor", "patch"]
   - package-ecosystem: pip
     directory: /law_corpus
     schedule:
@@ -14,6 +16,7 @@ updates:
     groups:
       pipeline-packages:
         patterns: ["*"]
+        update-types: ["minor", "patch"]
   - package-ecosystem: github-actions
     directory: /
     schedule:
@@ -21,6 +24,7 @@ updates:
     groups:
       actions:
         patterns: ["*"]
+        update-types: ["minor", "patch"]
   - package-ecosystem: docker
     directories:
       - /backend
