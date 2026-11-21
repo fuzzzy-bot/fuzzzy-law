@@ -17,7 +17,7 @@ jobs:
         working-directory: backend
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.11"
       - run: pip install --no-deps -r requirements-connector.txt -r requirements-dev.txt && pip check
@@ -32,7 +32,7 @@ jobs:
         working-directory: law_corpus
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.11"
       - run: pip install --no-deps -r requirements-refresh.txt -r requirements-dev.txt && pip check
