@@ -287,3 +287,10 @@ class TestHealth:
             response = c.get("/healthz")
         assert response.status_code == 503
         assert response.json()["status"] == "law_store_unavailable"
+
+
+class TestDefaultLimit:
+    def test_default_limit_is_sixty_a_minute(self):
+        from app.config.settings import Settings
+
+        assert Settings().connector_rate_limit_per_minute == 60

@@ -40,7 +40,7 @@ class Settings(BaseSettings):
                     "the OpenAPI servers list and the coverage page.",
     )
     connector_rate_limit_per_minute: int = Field(
-        default=30,
+        default=60,
         description="Requests per minute per caller (per address in open mode, "
                     "per key in api_key mode).",
     )

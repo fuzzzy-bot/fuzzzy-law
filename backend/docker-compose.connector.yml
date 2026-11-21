@@ -36,7 +36,7 @@ services:
       CONNECTOR_ALLOWED_HOSTS: ${CONNECTOR_ALLOWED_HOSTS:-}
       # Web origins that may read /api/v1/connector/coverage from a browser.
       CONNECTOR_CORS_ORIGINS: ${CONNECTOR_CORS_ORIGINS:-https://law.fuzzzycore.com,https://fuzzzylaw.web.app}
-      CONNECTOR_RATE_LIMIT_PER_MINUTE: ${CONNECTOR_RATE_LIMIT_PER_MINUTE:-30}
+      CONNECTOR_RATE_LIMIT_PER_MINUTE: ${CONNECTOR_RATE_LIMIT_PER_MINUTE:-60}
       CONNECTOR_SHARED_RATE_LIMIT_PER_MINUTE: ${CONNECTOR_SHARED_RATE_LIMIT_PER_MINUTE:-600}
       # Networks AI providers call from for many people at once (CIDR, comma-separated).
       CONNECTOR_SHARED_IP_RANGES: ${CONNECTOR_SHARED_IP_RANGES:-}
