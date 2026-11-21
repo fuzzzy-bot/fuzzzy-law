@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="ka">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fuzzzy Law — საქართველოს კანონები შენს AI ასისტენტში</title>
+<meta name="description" content="უფასო კონექტორი, რომლითაც ChatGPT, Claude, Gemini და სხვა ასისტენტები საქართველოს კანონებს წყაროდან კითხულობენ: მოქმედ ტექსტს matsne.gov.ge-დან ოფიციალური ბმულით, ადრინდელ რედაქციებს და სასამართლოების გადაწყვეტილებებს.">
+<link rel="canonical" href="https://law.fuzzzycore.com/">
+<link rel="alternate" hreflang="ka" href="https://law.fuzzzycore.com/">
+<link rel="alternate" hreflang="en" href="https://law.fuzzzycore.com/en/">
+<link rel="alternate" hreflang="x-default" href="https://law.fuzzzycore.com/">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f2f0e9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b0c0f" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Fuzzzy Law">
+<meta property="og:title" content="Fuzzzy Law — საქართველოს კანონები შენს AI ასისტენტში">
+<meta property="og:description" content="უფასო კონექტორი: ასისტენტი კანონს წყაროდან კითხულობს და ოფიციალურ ბმულს მიუთითებს.">
+<meta property="og:url" content="https://law.fuzzzycore.com/">
+<meta property="og:image" content="https://law.fuzzzycore.com/icon-512.png">
+<meta property="og:locale" content="ka_GE">
+<meta property="og:locale:alternate" content="en_GB">
+<link rel="preload" href="{{asset:fonts/noto-sans-georgian-georgian.woff2}}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{asset:fonts/inter-latin.woff2}}" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="{{asset:site.css}}">
+<script src="{{asset:site.js}}"></script>
+</head>
+<body>
+<a class="skip" href="#main">მთავარ ტექსტზე გადასვლა</a>
+
+<header class="top wrap">
+  <a class="brand" href="/">{{mark}}<span>Fuzzzy Law</span></a>
+  <nav class="top__nav" aria-label="ენა და თემა">
+    <a class="top__link" href="/en/" hreflang="en" lang="en">English</a>
+    <button class="iconbtn" type="button" data-theme-toggle aria-pressed="false" hidden>
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+      <span class="sr-only">მუქი თემა</span>
+    </button>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="hero wrap" aria-labelledby="title">
+    <div class="hero__inner">
+      <h1 id="title">საქართველოს კანონები შენს AI ასისტენტში</h1>
+      <p class="lead">Fuzzzy Law უფასო კონექტორია. მისი დახმარებით ChatGPT, Claude, Gemini და სხვა ასისტენტები საქართველოს კანონებს წყაროდან კითხულობენ: მოქმედ ტექსტს matsne.gov.ge-დან ოფიციალური ბმულით, ადრინდელ რედაქციებს 2015 წლიდან და სასამართლოების გამოქვეყნებულ გადაწყვეტილებებს.</p>
+      <p class="lead">ჩვენთან ანგარიში არ გჭირდება, ვებ-ვერსიაში არაფერს აყენებ და ეს უფასოა.</p>
+    </div>
+
+    <div class="plate">
+      <span class="plate__label">კონექტორის მისამართი</span>
+      <div class="plate__row">
+        <code class="plate__addr" id="addr">https://<wbr>law-api<wbr>.fuzzzycore.com<wbr>/mcp</code>
+        <button class="btn btn--main" type="button" data-copy="addr" data-copied-note="მისამართი დაკოპირდა." data-failed-note="ვერ დაკოპირდა. მონიშნე მისამართი და დააკოპირე ხელით." hidden>
+          {{icons:copy}}
+          <span class="btn__labels"><span class="btn__idle">დააკოპირე მისამართი</span><span class="btn__done">დაკოპირდა</span></span>
+        </button>
+      </div>
+      <p class="plate__help">ეს მისამართი ერთხელ უნდა დაამატო ასისტენტის პარამეტრებში. <a href="#connect">ინსტრუქცია ქვემოთაა</a>.</p>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section class="section" id="steps" aria-labelledby="steps-title">
+      <h2 id="steps-title">სამი ნაბიჯი</h2>
+      <div class="body">
+        <ol class="steps">
+          <li>
+            <h3>დაამატე მისამართი ასისტენტში</h3>
+            <p>ინსტრუქცია თითოეული ასისტენტისთვის <a href="#connect">ქვემოთაა</a>.</p>
+          </li>
+          <li>
+            <h3>გაუგზავნე მზა შეტყობინება</h3>
+            <p>ის ასისტენტს ეუბნება, როგორ იმუშაოს კანონებთან. <a href="#send">ტექსტი აქაა</a>.</p>
+          </li>
+          <li>
+            <h3>დასვი კითხვა ჩვეულებრივად</h3>
+            <p>ასისტენტი მუხლს სიტყვასიტყვით მოიყვანს და matsne.gov.ge-ის ბმულს მიუთითებს. მაინც შეიძლება შეცდეს, ამიტომ ბმული გადაამოწმე.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section" id="send" aria-labelledby="send-title">
+      <h2 id="send-title">გაუგზავნე ეს ასისტენტს</h2>
+      <div class="body">
+        <p>კონექტორის დამატების შემდეგ გახსენი ახალი ჩატი, ჩასვი ეს ტექსტი და გაგზავნე. შემდეგ კითხვა ჩვეულებრივად დასვი.</p>
+        {{send_this}}
+        <div class="actions">
+          <button class="btn btn--main" type="button" data-copy="send-text" data-copied-note="ტექსტი დაკოპირდა." data-failed-note="ვერ დაკოპირდა. მონიშნე ტექსტი და დააკოპირე ხელით." hidden>
+            {{icons:copy}}
+            <span class="btn__labels"><span class="btn__idle">დააკოპირე ტექსტი</span><span class="btn__done">დაკოპირდა</span></span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="connect" aria-labelledby="connect-title">
+      <h2 id="connect-title">როგორ დავამატო ასისტენტში</h2>
+      <div class="body">
+        <p>ნებისმიერი აპი, რომელსაც დისტანციური MCP სერვერის დამატება შეუძლია, ამ მისამართთან იმუშავებს. შესვლა და გასაღები არ სჭირდება. აპების მენიუები ინგლისურადაა, ამიტომ ღილაკების სახელებს ისე ვწერთ, როგორც აპშია.</p>
+
+        <div class="acc">
+          <details>
+            <summary>
+              <span><span class="acc__name">Claude</span><span class="acc__line">claude.ai, კომპიუტერის აპი, ტელეფონი, Claude Code</span></span>
+              {{icons:chevron}}
+            </summary>
+            <div class="acc__body">
+              <p class="plans"><strong>რომელ გეგმაზე:</strong> Free (მხოლოდ ერთი საკუთარი კონექტორი), Pro, Max, Team და Enterprise. Team-სა და Enterprise-ში კონექტორს ორგანიზაციის მფლობელი ამატებს, წევრები კი შემდეგ თავად ჩართავენ.</p>
+              <ol class="numbered">
+                <li>გახსენი claude.ai ან Claude-ის აპი კომპიუტერზე, შემდეგ <span class="ui">Customize › Connectors</span>.</li>
+                <li>დააჭირე ღილაკს <span class="ui">„+ Add“</span>, შემდეგ აირჩიე <span class="ui">„Add custom connector“</span>.</li>
+                <li>სახელად ჩაწერე <span class="ui">Georgian law</span>, მისამართის ველში ჩასვი კონექტორის მისამართი და დააჭირე ღილაკს <span class="ui">„Continue“</span>. შემდეგ კიდევ ერთხელ <span class="ui">„Continue“</span>.</li>
+                <li>განყოფილებაში <span class="ui">Authentication</span> აირჩიე <span class="ui">„No sign in“</span> და დააჭირე ღილაკს <span class="ui">„Add“</span>.</li>
+                <li>ჩატში, ქვედა მარცხენა კუთხეში, დააჭირე ღილაკს <span class="ui">„+“</span>, აირჩიე <span class="ui">Connectors</span> და ჩართე <span class="ui">Georgian law</span>.</li>
+              </ol>
+              <p>ტელეფონზე: ჯერ ვებში დაამატე. ამის შემდეგ კონექტორი iPhone-ისა და Android-ის Claude-ის აპშიც გამოჩნდება.</p>
+              <p class="source">Anthropic-ის დოკუმენტაციის მიხედვით. შემოწმდა: {{vendor_checked}}. <a href="https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp" hreflang="en">support.claude.com</a></p>
+              <h3>Claude Code</h3>
+              <p>ტერმინალში ერთი ბრძანება საკმარისია:</p>
+              <div class="code">
+                <pre id="cmd-claude">claude mcp add --transport http georgian-law https://law-api.fuzzzycore.com/mcp</pre>
+                <button class="btn btn--second btn--small" type="button" data-copy="cmd-claude" data-copied-note="ბრძანება დაკოპირდა." hidden>
+                  {{icons:copy}}
+                  <span class="btn__labels"><span class="btn__idle">დააკოპირე</span><span class="btn__done">დაკოპირდა</span></span>
+                </button>
+              </div>
+              <p class="muted">შემოწმება: <code>claude mcp list</code>. თუ Claude Code-ში claude.ai-ის ანგარიშით ხარ შესული, claude.ai-ზე დამატებული კონექტორი აქაც ავტომატურად გამოჩნდება.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <span><span class="acc__name">ChatGPT</span><span class="acc__line">chatgpt.com, მხოლოდ ვებში</span></span>
+              {{icons:chevron}}
+            </summary>
+            <div class="acc__body">
+              <p class="plans"><strong>რომელ გეგმაზე:</strong> Business, Enterprise და Edu (კონექტორს ადმინისტრატორი ან მფლობელი ამატებს). Pro-ზე დამატება მხოლოდ წაკითხვის უფლებით შეიძლება. Free, Go და Plus OpenAI-ის დოკუმენტაციაში ნახსენები არ არის, ამიტომ იქ შეიძლება არ იმუშაოს. ტელეფონის აპიდან დამატება არ შეიძლება.</p>
+              <ol class="numbered">
+                <li>გახსენი <span class="ui">chatgpt.com/plugins</span>.</li>
+                <li>დააჭირე პლიუსს და აირჩიე <span class="ui">„Add custom MCP server“</span>.</li>
+                <li>სახელად ჩაწერე <span class="ui">Georgian law</span>. განყოფილებაში <span class="ui">Connection</span>, ველში <span class="ui">„Server URL“</span> ჩასვი კონექტორის მისამართი.</li>
+                <li>ავტორიზაციის ველში აირჩიე <span class="ui">„No authentication“</span>.</li>
+                <li>წაიკითხე გაფრთხილება, აირჩიე <span class="ui">„I understand and want to continue“</span>, შემდეგ <span class="ui">„Create as a plugin“</span>.</li>
+                <li>დააყენე შექმნილი პლაგინი. ჩატში დაწერე <span class="ui">@</span> და აირჩიე <span class="ui">Georgian law</span>.</li>
+              </ol>
+              <p class="source">OpenAI-ის დოკუმენტაციის მიხედვით. შემოწმდა: {{vendor_checked}}. <a href="https://developers.openai.com/api/docs/guides/developer-mode" hreflang="en">developers.openai.com</a>, <a href="https://help.openai.com/en/articles/12584461-developer-mode-and-mcp-connectors" hreflang="en">help.openai.com</a></p>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <span><span class="acc__name">Gemini</span><span class="acc__line">Gemini-ის აპი ჯერ ვერ უკავშირდება</span></span>
+              {{icons:chevron}}
+            </summary>
+            <div class="acc__body">
+              <p>Gemini-ის ჩვეულებრივ აპში ასეთი კონექტორის დამატების პარამეტრი დღეს არ არის. Google აღწერს მხოლოდ დეველოპერებისთვის განკუთვნილ სატესტო რეჟიმს (Gemini Apps Developer Mode) და იქ შესვლის გარეშე მისამართის დამატება დადასტურებული არ არის. ამიტომ Gemini-ის აპს ამ ეტაპზე ვერ გირჩევთ.</p>
+              <p>Gemini CLI-ში (ტერმინალი) კი მუშაობს:</p>
+              <div class="code">
+                <pre id="cmd-gemini">gemini mcp add --transport http -s user georgian-law https://law-api.fuzzzycore.com/mcp</pre>
+                <button class="btn btn--second btn--small" type="button" data-copy="cmd-gemini" data-copied-note="ბრძანება დაკოპირდა." hidden>
+                  {{icons:copy}}
+                  <span class="btn__labels"><span class="btn__idle">დააკოპირე</span><span class="btn__done">დაკოპირდა</span></span>
+                </button>
+              </div>
+              <p class="muted"><code>-s user</code> კონექტორს ყველა პროექტში ამატებს. შემოწმება: <code>/mcp</code> სესიაში.</p>
+              <p class="source">Google-ის დოკუმენტაციის მიხედვით. შემოწმდა: {{vendor_checked}}. <a href="https://developers.google.com/connected-apps/mcp/dev-mode/usage" hreflang="en">developers.google.com</a>, <a href="https://github.com/google-gemini/gemini-cli/blob/main/docs/tools/mcp-server.md" hreflang="en">Gemini CLI</a></p>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <span><span class="acc__name">სხვა აპები</span><span class="acc__line">VS Code, Cursor, Codex და მსგავსი</span></span>
+              {{icons:chevron}}
+            </summary>
+            <div class="acc__body">
+              <p><strong>VS Code (GitHub Copilot):</strong> ბრძანებების პანელში აირჩიე <span class="ui">„MCP: Add Server“</span>, შემდეგ <span class="ui">HTTP</span>, და ჩასვი კონექტორის მისამართი. Copilot Business-სა და Enterprise-ში MCP ჯერ ადმინისტრატორმა უნდა ჩართოს.</p>
+              <p><strong>Cursor:</strong> ფაილში <code>~/.cursor/mcp.json</code> დაამატე:</p>
+              <div class="code">
+                <pre id="cmd-cursor">{ "mcpServers": { "georgian-law": { "url": "https://law-api.fuzzzycore.com/mcp" } } }</pre>
+                <button class="btn btn--second btn--small" type="button" data-copy="cmd-cursor" data-copied-note="ტექსტი დაკოპირდა." hidden>
+                  {{icons:copy}}
+                  <span class="btn__labels"><span class="btn__idle">დააკოპირე</span><span class="btn__done">დაკოპირდა</span></span>
+                </button>
+              </div>
+              <p><strong>Codex CLI:</strong></p>
+              <div class="code">
+                <pre id="cmd-codex">codex mcp add georgian-law --url https://law-api.fuzzzycore.com/mcp</pre>
+                <button class="btn btn--second btn--small" type="button" data-copy="cmd-codex" data-copied-note="ბრძანება დაკოპირდა." hidden>
+                  {{icons:copy}}
+                  <span class="btn__labels"><span class="btn__idle">დააკოპირე</span><span class="btn__done">დაკოპირდა</span></span>
+                </button>
+              </div>
+              <p>Mistral Le Chat, Perplexity (Pro და ზემოთ), Zed, JetBrains AI Assistant და LM Studio ამ მისამართს ასევე იღებენ. ნაბიჯები სრულ ინსტრუქციაშია. Microsoft Copilot-ის ჩვეულებრივ ვერსიას საკუთარი კონექტორის დამატება არ შეუძლია.</p>
+            </div>
+          </details>
+        </div>
+
+        <p><a href="https://github.com/fuzzzy-bot/fuzzzy-law/blob/main/docs/connect/README.md">სრული ინსტრუქცია ყველა აპისთვის GitHub-ზე</a></p>
+      </div>
+    </section>
+
+    <section class="section" id="coverage" aria-labelledby="coverage-title">
+      <h2 id="coverage-title">რა ინახება</h2>
+      <div class="body" data-cov-built="{{cov:asof_iso}}">
+        <ul class="nums">
+          <li><span class="num" data-cov="laws">{{cov:laws}}</span><span class="num__label">კანონი</span></li>
+          <li><span class="num" data-cov="articles">{{cov:articles}}</span><span class="num__label">მუხლი</span></li>
+          <li><span class="num" data-cov="court_practice">{{cov:court_practice}}</span><span class="num__label">უზენაესი სასამართლოს გადაწყვეტილება</span></li>
+          <li><span class="num" data-cov="grand_chamber">{{cov:grand_chamber}}</span><span class="num__label">უზენაესი სასამართლოს დიდი პალატის გადაწყვეტილება</span></li>
+          <li><span class="num" data-cov="constitutional_court">{{cov:constitutional_court}}</span><span class="num__label">საკონსტიტუციო სასამართლოს გადაწყვეტილება</span></li>
+        </ul>
+        <p class="asof">მონაცემების თარიღი: <time data-cov="asof" datetime="{{cov:asof_iso}}">{{cov:asof_text}}</time>.</p>
+        <p class="note" data-cov-warning{{cov:warning_hidden}}>ღამის შემოწმება რამდენიმე დღეა ვერ მოხერხდა. ტექსტები ბოლო დადასტურებული სახითაა და ასისტენტის ყოველ პასუხს გაფრთხილება ერთვის.</p>
+        <details class="disclose">
+          <summary><span data-cov="laws">{{cov:laws}}</span> კანონის სია</summary>
+          <ul class="laws">
+{{law_list}}
+          </ul>
+        </details>
+      </div>
+    </section>
+
+    <section class="section" id="current" aria-labelledby="current-title">
+      <h2 id="current-title">როგორ რჩება მონაცემები ახალი</h2>
+      <div class="body">
+        <ul class="list">
+          <li>ყოველ ღამე 01:17-ზე (UTC; თბილისის დროით 05:17) ყველა კანონის გვერდს matsne.gov.ge-ზე თავიდან ვამოწმებთ. თუ კანონი შეიცვალა, მას თავიდან ვკითხულობთ.</li>
+          <li>ახალი ტექსტი ძველს მხოლოდ მაშინ ცვლის, როცა ყველა მუხლი ადგილზეა და ყოველი სტრიქონი სიტყვასიტყვით ემთხვევა matsne-ს. გარდა ამისა, ყოველ ღამე შემთხვევით არჩეულ 50 მუხლს ცალკე ვადარებთ.</li>
+          <li>თუ შემოწმება ვერ მოხერხდა, ბოლო დადასტურებული ტექსტი რჩება. თუ სამი დღე ზედიზედ ვერ მოხერხდა, ყოველ პასუხს გაფრთხილება ერთვის.</li>
+          <li>ადრინდელი რედაქციები ინახება და არ იცვლება, ამიტომ მუხლი შეგიძლია წაიკითხო ისე, როგორც კონკრეტულ დღეს იყო.</li>
+          <li>სასამართლო გადაწყვეტილებები ჯერ ავტომატურად არ ახლდება: ახლებს ჯგუფებად ვამატებთ. ბოლო განახლება: <time datetime="{{cov:courts_updated_iso}}">{{cov:courts_updated_text}}</time>.</li>
+          <li>ცვლილებები, რომლებიც მიღებულია, მაგრამ matsne-ზე კონსოლიდირებულ ტექსტში ჯერ არ შესულა, აქ არ ინახება.</li>
+          <li>ყველაფერს ვიღებთ ისე, როგორც საიტები უშვებენ: მათი robots.txt წესების დაცვით, ერთდროულად მხოლოდ ერთი მოთხოვნით, მინიმუმ 10 წამის შუალედით.</li>
+        </ul>
+        <p><a href="https://github.com/fuzzzy-bot/fuzzzy-law/blob/main/docs/data.md">როგორ ვაგროვებთ და ვინახავთ მონაცემებს, დაწვრილებით</a></p>
+      </div>
+    </section>
+
+    <section class="section" id="limits" aria-labelledby="limits-title">
+      <h2 id="limits-title">რა უნდა იცოდე</h2>
+      <div class="body">
+        <ul class="list">
+          <li><strong>ჩვენ იურისტები არ ვართ.</strong> ვეცადეთ, ეს რაც შეიძლება კარგად გაგვეკეთებინა.</li>
+          <li><strong>ეს არის სამართლებრივი ინფორმაცია და არა იურიდიული კონსულტაცია.</strong></li>
+          <li>აქ მხოლოდ <span data-cov="laws">{{cov:laws}}</span> კანონი ინახება (სია <a href="#coverage">ზემოთაა</a>). სხვა კანონები, მთავრობისა და სამინისტროების აქტები, მუნიციპალიტეტების აქტები, საქალაქო (რაიონული) და სააპელაციო სასამართლოების გადაწყვეტილებები, საერთაშორისო ხელშეკრულებები და ადამიანის უფლებათა ევროპული სასამართლოს გადაწყვეტილებები აქ არ არის.</li>
+          <li>უზენაესი სასამართლოს კრებულები სასამართლოს მიერ შერჩეული გადაწყვეტილებებია და არა ყველა. თუ გადაწყვეტილება ვერ მოიძებნა, ეს არ ნიშნავს, რომ ის არ არსებობს.</li>
+          <li>ასისტენტმა შეიძლება მაინც შეცდეს. გადაამოწმე მუხლი ოფიციალურ ბმულზე და, როცა საქმე მნიშვნელოვანია, ჰკითხე იურისტს.</li>
+        </ul>
+        <h3>დაგვეხმარე</h3>
+        <p>კოდი ღიაა და მონაწილეობა ყველას შეუძლია. თუ შეცდომას იპოვი, მაგალითად, არასწორ მუხლს ან გატეხილ ბმულს, მოგვწერე <a href="https://github.com/fuzzzy-bot/fuzzzy-law/issues">GitHub-ზე</a>. ამისთვის პროგრამირების ცოდნა არ გჭირდება. კოდით დახმარებაც სასურველია: <a href="https://github.com/fuzzzy-bot/fuzzzy-law">github.com/fuzzzy-bot/fuzzzy-law</a>.</p>
+      </div>
+    </section>
+
+    <section class="section" id="help" aria-labelledby="help-title">
+      <h2 id="help-title">უფასო იურიდიული დახმარება</h2>
+      <div class="body">
+        <div class="note note--red">
+          <p class="note__big">თუ ვინმე შეიძლება ახლა საფრთხეში იყოს, ჯერ დარეკე <a href="tel:112">112</a>-ზე.</p>
+          <p>ოჯახში ძალადობა ან ქალთა მიმართ ძალადობა: ცხელი ხაზი <a class="tel" href="tel:116006">116 006</a>.</p>
+        </div>
+{{free_help:ka}}
+      </div>
+    </section>
+
+    <section class="section" id="privacy" aria-labelledby="privacy-title">
+      <h2 id="privacy-title">კონფიდენციალურობა</h2>
+      <div class="body">
+        <p>შენს კითხვებს არ ვინახავთ. სერვერი ბოროტად გამოყენებისგან დასაცავად შვიდი დღით ინახავს ქსელის ჟურნალს: IP მისამართს, დროს, მოთხოვნის მისამართს და პასუხის კოდს.</p>
+        <p>ეს გვერდი cookie-ებს არ იყენებს და თვალთვალის სკრიპტებს არ ტვირთავს. თემის არჩევანი და ბოლო ციფრები მხოლოდ შენს ბრაუზერში ინახება. საუბარი შენს ასისტენტში მიმდინარეობს და მას ასისტენტის კომპანიის წესები ეხება.</p>
+        <p><a href="https://github.com/fuzzzy-bot/fuzzzy-law/blob/main/docs/privacy.md">კონფიდენციალურობა დაწვრილებით</a></p>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="foot wrap">
+  <p>Fuzzzy Law — Fuzzy Core LLC-ის პროექტი. ლიცენზია: <a href="https://github.com/fuzzzy-bot/fuzzzy-law/blob/main/LICENSE">MIT</a>.</p>
+  <div class="foot__row">
+    <a href="https://github.com/fuzzzy-bot/fuzzzy-law">GitHub</a>
+    <a href="mailto:support@fuzzzycore.com">support@fuzzzycore.com</a>
+    <a href="/en/" hreflang="en" lang="en">English</a>
+  </div>
+</footer>
+<p class="sr-only" id="copy-status" aria-live="polite"></p>
+</body>
+</html>

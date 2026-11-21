@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fuzzzy Law — Georgian law inside your AI assistant</title>
+<meta name="description" content="A free connector that lets ChatGPT, Claude, Gemini and other assistants read Georgian law at the source: the exact current text from matsne.gov.ge with official links, earlier wordings and published court decisions.">
+<link rel="canonical" href="https://law.fuzzzycore.com/en/">
+<link rel="alternate" hreflang="ka" href="https://law.fuzzzycore.com/">
+<link rel="alternate" hreflang="en" href="https://law.fuzzzycore.com/en/">
+<link rel="alternate" hreflang="x-default" href="https://law.fuzzzycore.com/">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f2f0e9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b0c0f" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Fuzzzy Law">
+<meta property="og:title" content="Fuzzzy Law — Georgian law inside your AI assistant">
+<meta property="og:description" content="A free connector: your assistant reads Georgian law at the source and gives the official link.">
+<meta property="og:url" content="https://law.fuzzzycore.com/en/">
+<meta property="og:image" content="https://law.fuzzzycore.com/icon-512.png">
+<meta property="og:locale" content="en_GB">
+<meta property="og:locale:alternate" content="ka_GE">
+<link rel="preload" href="{{asset:fonts/inter-latin.woff2}}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{asset:fonts/space-grotesk-latin.woff2}}" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="{{asset:site.css}}">
+<script src="{{asset:site.js}}"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the main text</a>
+
+<header class="top wrap">
+  <a class="brand" href="/en/">{{mark}}<span>Fuzzzy Law</span></a>
+  <nav class="top__nav" aria-label="Language and theme">
+    <a class="top__link" href="/" hreflang="ka" lang="ka">ქართული</a>
+    <button class="iconbtn" type="button" data-theme-toggle aria-pressed="false" hidden>
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+      <span class="sr-only">Dark theme</span>
+    </button>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="hero wrap" aria-labelledby="title">
+    <div class="hero__inner">
+      <h1 id="title">Georgian law, inside your AI assistant</h1>
+      <p class="lead">Fuzzzy Law is a free connector. It lets ChatGPT, Claude, Gemini and other assistants read Georgian law at the source: the exact current text from matsne.gov.ge with the official link, earlier wordings back to 2015, and published court decisions.</p>
+      <p class="lead">No account with us, nothing to install on the web, and it is free.</p>
+    </div>
+
+    <div class="plate">
+      <span class="plate__label">Connector address</span>
+      <div class="plate__row">
+        <code class="plate__addr" id="addr">https://<wbr>law-api<wbr>.fuzzzycore.com<wbr>/mcp</code>
+        <button class="btn btn--main" type="button" data-copy="addr" data-copied-note="Address copied." data-failed-note="Could not copy. Select the address and copy it by hand." hidden>
+          {{icons:copy}}
+          <span class="btn__labels"><span class="btn__idle">Copy address</span><span class="btn__done">Copied</span></span>
+        </button>
+      </div>
+      <p class="plate__help">Add this address once in your assistant's settings. How to do it is <a href="#connect">below</a>.</p>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section class="section" id="steps" aria-labelledby="steps-title">
+      <h2 id="steps-title">Three steps</h2>
+      <div class="body">
+        <ol class="steps">
+          <li>
+            <h3>Add the address to your assistant</h3>
+            <p>Steps for each assistant are <a href="#connect">below</a>.</p>
+          </li>
+          <li>
+            <h3>Send it the ready-made message</h3>
+            <p>It tells the assistant how to work with the law. <a href="#send">The text is here</a>.</p>
+          </li>
+          <li>
+            <h3>Ask your question as usual</h3>
+            <p>The assistant quotes the article word for word and links to matsne.gov.ge. It can still make mistakes, so check the link.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section" id="send" aria-labelledby="send-title">
+      <h2 id="send-title">Send this to your assistant</h2>
+      <div class="body">
+        <p>After adding the connector, open a new chat, paste this text and send it. Then ask your question as you normally would.</p>
+        {{send_this}}
+        <div class="actions">
+          <button class="btn btn--main" type="button" data-copy="send-text" data-copied-note="Message copied." data-failed-note="Could not copy. Select the text and copy it by hand." hidden>
+            {{icons:copy}}
+            <span class="btn__labels"><span class="btn__idle">Copy message</span><span class="btn__done">Copied</span></span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="connect" aria-labelledby="connect-title">
+      <h2 id="connect-title">Connect your assistant</h2>
+      <div class="body">
+        <p>Any app that can add a remote MCP server works with this address. No sign-in and no key are needed. Button names are given exactly as they appear in each app.</p>
+
+        <div class="acc">
+          <details>
+            <summary>
+              <span><span class="acc__name">Claude</span><span class="acc__line">claude.ai, desktop app, phone, Claude Code</span></span>
+              {{icons:chevron}}
+            </summary>
+            <div class="acc__body">
+              <p class="plans"><strong>Plans:</strong> Free (one custom connector only), Pro, Max, Team and Enterprise. On Team and Enterprise an organisation owner adds it, and members then turn it on themselves.</p>
+              <ol class="numbered">
+                <li>Open claude.ai or the Claude desktop app and go to <span class="ui">Customize › Connectors</span>.</li>
+                <li>Click <span class="ui">“+ Add”</span>, then <span class="ui">“Add custom connector”</span>.</li>
+                <li>Enter the name <span class="ui">Georgian law</span>, paste the connector address as the server URL and click <span class="ui">“Continue”</span>. Then click <span class="ui">“Continue”</span> once more.</li>
+                <li>Under <span class="ui">Authentication</span> choose <span class="ui">“No sign in”</span> and click <span class="ui">“Add”</span>.</li>
+                <li>In a chat, click <span class="ui">“+”</span> at the lower left, choose <span class="ui">Connectors</span> and turn <span class="ui">Georgian law</span> on.</li>
+              </ol>
+              <p>On a phone: add it on the web first. It then appears in the Claude app on iPhone and Android.</p>
+              <p class="source">From Anthropic's documentation, checked {{vendor_checked}}. <a href="https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp">support.claude.com</a></p>
+              <h3>Claude Code</h3>
+              <p>One command in the terminal:</p>
+              <div class="code">
+                <pre id="cmd-claude">claude mcp add --transport http georgian-law https://law-api.fuzzzycore.com/mcp</pre>
+                <button class="btn btn--second btn--small" type="button" data-copy="cmd-claude" data-copied-note="Command copied." hidden>
+                  {{icons:copy}}
+                  <span class="btn__labels"><span class="btn__idle">Copy</span><span class="btn__done">Copied</span></span>
+                </button>
+              </div>
+              <p class="muted">Check it with <code>claude mcp list</code>. If you signed in to Claude Code with a claude.ai account, a connector added on claude.ai appears there by itself.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <span><span class="acc__name">ChatGPT</span><span class="acc__line">chatgpt.com, web only</span></span>
+              {{icons:chevron}}
+            </summary>
+            <div class="acc__body">
+              <p class="plans"><strong>Plans:</strong> Business, Enterprise and Edu (an admin or owner adds it). Pro can connect it with read-only permissions. OpenAI's documentation does not mention Free, Go or Plus, so it may not work there. It cannot be added from the phone app.</p>
+              <ol class="numbered">
+                <li>Open <span class="ui">chatgpt.com/plugins</span>.</li>
+                <li>Select the plus button, then <span class="ui">“Add custom MCP server”</span>.</li>
+                <li>Enter the name <span class="ui">Georgian law</span>. Under <span class="ui">Connection</span>, paste the connector address into <span class="ui">“Server URL”</span>.</li>
+                <li>For authentication, choose <span class="ui">“No authentication”</span>.</li>
+                <li>Read the warning, select <span class="ui">“I understand and want to continue”</span>, then <span class="ui">“Create as a plugin”</span>.</li>
+                <li>Install the new plugin. In a chat, type <span class="ui">@</span> and pick <span class="ui">Georgian law</span>.</li>
+              </ol>
+              <p class="source">From OpenAI's documentation, checked {{vendor_checked}}. <a href="https://developers.openai.com/api/docs/guides/developer-mode">developers.openai.com</a>, <a href="https://help.openai.com/en/articles/12584461-developer-mode-and-mcp-connectors">help.openai.com</a></p>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <span><span class="acc__name">Gemini</span><span class="acc__line">the Gemini app cannot connect yet</span></span>
+              {{icons:chevron}}
+            </summary>
+            <div class="acc__body">
+              <p>The ordinary Gemini app has no setting for adding a connector like this today. Google documents only a test mode for developers (Gemini Apps Developer Mode), and adding an address without sign-in is not confirmed there. So we cannot recommend the Gemini app for now.</p>
+              <p>Gemini CLI (in the terminal) does work:</p>
+              <div class="code">
+                <pre id="cmd-gemini">gemini mcp add --transport http -s user georgian-law https://law-api.fuzzzycore.com/mcp</pre>
+                <button class="btn btn--second btn--small" type="button" data-copy="cmd-gemini" data-copied-note="Command copied." hidden>
+                  {{icons:copy}}
+                  <span class="btn__labels"><span class="btn__idle">Copy</span><span class="btn__done">Copied</span></span>
+                </button>
+              </div>
+              <p class="muted"><code>-s user</code> adds it for all your projects. Check it with <code>/mcp</code> in a session.</p>
+              <p class="source">From Google's documentation, checked {{vendor_checked}}. <a href="https://developers.google.com/connected-apps/mcp/dev-mode/usage">developers.google.com</a>, <a href="https://github.com/google-gemini/gemini-cli/blob/main/docs/tools/mcp-server.md">Gemini CLI</a></p>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <span><span class="acc__name">Other apps</span><span class="acc__line">VS Code, Cursor, Codex and similar</span></span>
+              {{icons:chevron}}
+            </summary>
+            <div class="acc__body">
+              <p><strong>VS Code (GitHub Copilot):</strong> in the Command Palette choose <span class="ui">“MCP: Add Server”</span>, then <span class="ui">HTTP</span>, and paste the connector address. On Copilot Business and Enterprise an admin must turn MCP on first.</p>
+              <p><strong>Cursor:</strong> add this to <code>~/.cursor/mcp.json</code>:</p>
+              <div class="code">
+                <pre id="cmd-cursor">{ "mcpServers": { "georgian-law": { "url": "https://law-api.fuzzzycore.com/mcp" } } }</pre>
+                <button class="btn btn--second btn--small" type="button" data-copy="cmd-cursor" data-copied-note="Text copied." hidden>
+                  {{icons:copy}}
+                  <span class="btn__labels"><span class="btn__idle">Copy</span><span class="btn__done">Copied</span></span>
+                </button>
+              </div>
+              <p><strong>Codex CLI:</strong></p>
+              <div class="code">
+                <pre id="cmd-codex">codex mcp add georgian-law --url https://law-api.fuzzzycore.com/mcp</pre>
+                <button class="btn btn--second btn--small" type="button" data-copy="cmd-codex" data-copied-note="Command copied." hidden>
+                  {{icons:copy}}
+                  <span class="btn__labels"><span class="btn__idle">Copy</span><span class="btn__done">Copied</span></span>
+                </button>
+              </div>
+              <p>Mistral Le Chat, Perplexity (Pro and above), Zed, JetBrains AI Assistant and LM Studio also take this address; the steps are in the full guide. The ordinary Microsoft Copilot cannot add a custom connector.</p>
+            </div>
+          </details>
+        </div>
+
+        <p><a href="https://github.com/fuzzzy-bot/fuzzzy-law/blob/main/docs/connect/README.md">The full guide for every app, on GitHub</a></p>
+      </div>
+    </section>
+
+    <section class="section" id="coverage" aria-labelledby="coverage-title">
+      <h2 id="coverage-title">What it holds</h2>
+      <div class="body" data-cov-built="{{cov:asof_iso}}">
+        <ul class="nums">
+          <li><span class="num" data-cov="laws">{{cov:laws}}</span><span class="num__label">laws</span></li>
+          <li><span class="num" data-cov="articles">{{cov:articles}}</span><span class="num__label">articles</span></li>
+          <li><span class="num" data-cov="court_practice">{{cov:court_practice}}</span><span class="num__label">Supreme Court decisions</span></li>
+          <li><span class="num" data-cov="grand_chamber">{{cov:grand_chamber}}</span><span class="num__label">Supreme Court Grand Chamber decisions</span></li>
+          <li><span class="num" data-cov="constitutional_court">{{cov:constitutional_court}}</span><span class="num__label">Constitutional Court judgments</span></li>
+        </ul>
+        <p class="asof">Data current as of <time data-cov="asof" datetime="{{cov:asof_iso}}">{{cov:asof_text}}</time>.</p>
+        <p class="note" data-cov-warning{{cov:warning_hidden}}>The nightly check has not succeeded for a few days. The texts stay as last confirmed, and every answer from the assistant carries a warning.</p>
+        <details class="disclose">
+          <summary>The <span data-cov="laws">{{cov:laws}}</span> laws held</summary>
+          <ul class="laws">
+{{law_list}}
+          </ul>
+        </details>
+      </div>
+    </section>
+
+    <section class="section" id="current" aria-labelledby="current-title">
+      <h2 id="current-title">How it stays current</h2>
+      <div class="body">
+        <ul class="list">
+          <li>Every night at 01:17 UTC (05:17 in Tbilisi), every law's page on matsne.gov.ge is checked again. A law that has changed is read again.</li>
+          <li>A new text replaces the old one only when every article is present and every line matches matsne word for word. Each night, 50 stored articles chosen at random are also compared on their own.</li>
+          <li>If a check fails, the last confirmed text stays. After three days without a successful check, every answer carries a warning.</li>
+          <li>Earlier wordings are kept and never change, so an article can be read as it stood on a given day.</li>
+          <li>Court decisions are not yet updated automatically: new ones are added in batches. Last update: <time datetime="{{cov:courts_updated_iso}}">{{cov:courts_updated_text}}</time>.</li>
+          <li>Amendments that are adopted but not yet in a consolidated text on matsne are not held.</li>
+          <li>Everything is downloaded the way the sites allow: following their robots.txt rules, one request at a time, at least 10 seconds apart.</li>
+        </ul>
+        <p><a href="https://github.com/fuzzzy-bot/fuzzzy-law/blob/main/docs/data.md">How the data is collected and kept, in full</a></p>
+      </div>
+    </section>
+
+    <section class="section" id="limits" aria-labelledby="limits-title">
+      <h2 id="limits-title">Before you rely on it</h2>
+      <div class="body">
+        <ul class="list">
+          <li><strong>We are not lawyers.</strong> We did our best to get this right.</li>
+          <li><strong>This is legal information, not legal advice.</strong></li>
+          <li>Only the <span data-cov="laws">{{cov:laws}}</span> laws <a href="#coverage">listed above</a> are held. Other laws, government and ministry acts, municipal acts, decisions of city (district) courts and courts of appeal, international treaties and judgments of the European Court of Human Rights are not.</li>
+          <li>The Supreme Court's collections are a selection the court makes, not every decision. If no decision is found, that does not mean none exists.</li>
+          <li>The assistant can still make mistakes. Check the article at its official link and, when it matters, ask a lawyer.</li>
+        </ul>
+        <h3>Contributors welcome</h3>
+        <p>The code is open and anyone can take part. If you find a mistake, such as a wrong article or a broken link, tell us <a href="https://github.com/fuzzzy-bot/fuzzzy-law/issues">on GitHub</a>. You do not need to know how to code. Help with the code is welcome too: <a href="https://github.com/fuzzzy-bot/fuzzzy-law">github.com/fuzzzy-bot/fuzzzy-law</a>.</p>
+      </div>
+    </section>
+
+    <section class="section" id="help" aria-labelledby="help-title">
+      <h2 id="help-title">Free legal help</h2>
+      <div class="body">
+        <div class="note note--red">
+          <p class="note__big">If anyone may be in immediate danger, call <a href="tel:112">112</a> first.</p>
+          <p>Domestic violence or violence against women: hotline <a class="tel" href="tel:116006">116 006</a>.</p>
+        </div>
+{{free_help:en}}
+      </div>
+    </section>
+
+    <section class="section" id="privacy" aria-labelledby="privacy-title">
+      <h2 id="privacy-title">Privacy</h2>
+      <div class="body">
+        <p>Your questions are not stored. To protect against abuse, the server keeps a network log for seven days: IP address, time, requested path and response status.</p>
+        <p>This page sets no cookies and loads no trackers. Your theme choice and the latest numbers are kept only in your browser. Your conversation happens in your assistant, under its company's rules.</p>
+        <p><a href="https://github.com/fuzzzy-bot/fuzzzy-law/blob/main/docs/privacy.md">Privacy in full</a></p>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="foot wrap">
+  <p>Fuzzzy Law, by Fuzzy Core LLC. Licence: <a href="https://github.com/fuzzzy-bot/fuzzzy-law/blob/main/LICENSE">MIT</a>.</p>
+  <div class="foot__row">
+    <a href="https://github.com/fuzzzy-bot/fuzzzy-law">GitHub</a>
+    <a href="mailto:support@fuzzzycore.com">support@fuzzzycore.com</a>
+    <a href="/" hreflang="ka" lang="ka">ქართული</a>
+  </div>
+</footer>
+<p class="sr-only" id="copy-status" aria-live="polite"></p>
+</body>
+</html>

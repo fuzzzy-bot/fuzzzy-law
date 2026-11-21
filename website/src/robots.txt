@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /our-gui/
+
+Sitemap: https://law.fuzzzycore.com/sitemap.xml

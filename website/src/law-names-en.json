@@ -1,0 +1,29 @@
+{
+  "_note": "English names of the laws the connector holds, copied from the connector's LAW_NAMES_EN (backend/app/services/connector_reference.py). The coverage endpoint gives Georgian names only.",
+  "names": {
+    "admin_offences_code": "Administrative Offences Code of Georgia",
+    "admin_procedure_code": "Administrative Procedure Code of Georgia",
+    "anti_discrimination_law": "Law of Georgia on the Elimination of All Forms of Discrimination",
+    "child_rights_code": "Code on the Rights of the Child of Georgia",
+    "civil_code": "Civil Code of Georgia",
+    "civil_procedure_code": "Civil Procedure Code of Georgia",
+    "constitution": "Constitution of Georgia",
+    "consumer_rights_law": "Law of Georgia on the Protection of Consumer Rights",
+    "criminal_code": "Criminal Code of Georgia",
+    "criminal_procedure_code": "Criminal Procedure Code of Georgia",
+    "customs_code": "Customs Code of Georgia",
+    "domestic_violence_law": "Law of Georgia on the Elimination of Violence against Women and/or Domestic Violence and the Protection and Support of Victims",
+    "election_code": "Election Code of Georgia",
+    "enforcement_law": "Law of Georgia on Enforcement Proceedings",
+    "entrepreneurial_law": "Law of Georgia on Entrepreneurs",
+    "general_admin_code": "General Administrative Code of Georgia",
+    "juvenile_justice_code": "Juvenile Justice Code of Georgia",
+    "labour_code": "Labour Code of Georgia",
+    "legal_aid_law": "Law of Georgia on Legal Aid",
+    "patient_rights_law": "Law of Georgia on the Rights of Patients",
+    "personal_data_law": "Law of Georgia on Personal Data Protection",
+    "social_assistance_law": "Law of Georgia on Social Assistance",
+    "state_pension_law": "Law of Georgia on State Pensions",
+    "tax_code": "Tax Code of Georgia"
+  }
+}
