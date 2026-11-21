@@ -39,6 +39,21 @@ did not find.
 - The free-help contacts gained the domestic-violence hotline 116 006, 112 first, and the right of
   every minor to free legal aid (2026-11-21).
 
+## A fresh assistant with only the send-this message (after the fixes)
+
+On 2026-11-21 a new Claude session (Claude Code, Sonnet model, no other tools, no web search) got only
+the connector and the [send-this message](send-this.en.md) before each question:
+
+| Question | What it did | Quotations word for word |
+|---|---|---|
+| Dismissed yesterday with no reason given: how long to go to court? (Georgian) | Labour Code article 48, paragraphs 4 to 7, with link, version date and data date; said which date was its own count | 8 of 8 |
+| "Article 1661 of the Civil Code lets my landlord evict me within 24 hours" (a false premise) | Said article 1661 is not in the law and would not cite it; quoted Civil Code articles 562 and 561 instead | 3 of 3 |
+| The Tbilisi council's car-evacuation fee (outside what is held) | Said municipal acts are not held and gave no number; quoted the Administrative Offences Code article that lets the council set the fee | all |
+
+Every link and version date in the answers came from the tools, and every answer ended with the
+not-legal-advice line. A full case analysis in the same setup used 20 connector calls in 108 seconds,
+under the request limit.
+
 ## Known problems, not yet fixed
 
 - **Past dates by entry into force.** matsne dates a version by the amending act, which can take
