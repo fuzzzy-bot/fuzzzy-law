@@ -3,7 +3,7 @@
 # Only what app.connector_main loads: no database driver, no Redis, no vector
 # store and no model SDK. Install with:  pip install --no-deps -r requirements-connector.txt
 # To change a version, change it here, rebuild the image and run the connector tests.
-annotated-doc==0.0.5
+annotated-doc==0.0.7
 annotated-types==0.8.0
 anyio==4.15.1
 attrs==26.1.0
