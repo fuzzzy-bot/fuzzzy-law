@@ -5,7 +5,7 @@
 - **შენს კითხვებს არ ვინახავთ.** სერვერის ჩანაწერებში არც კითხვის ტექსტი წერია და არც შენი მისამართი.
 - **ქსელის ჩანაწერი, 7 დღე.** სერვერის წინ მდგომი ვებსერვერი (nginx) იწერს მოთხოვნის მისამართს
   (IP), დროს, გვერდს კითხვის ნაწილის გარეშე და პასუხის კოდს. ის 7 დღეში იშლება. ეს გვჭირდება
-  ბოროტად გამოყენებისგან დასაცავად (მაგალითად, წუთში 30 მოთხოვნის ლიმიტისთვის).
+  ბოროტად გამოყენებისგან დასაცავად (მაგალითად, წუთში 60 მოთხოვნის ლიმიტისთვის).
 - **ჩვენი სერვერი AI-ს არ იძახებს** და შენს მონაცემებს არავის გადასცემს. პასუხს შენი ასისტენტი
   წერს; შენი საუბარი იმ კომპანიის წესებით ინახება, ვისი ასისტენტიც იყენებ (Anthropic, OpenAI,
   Google და სხვ.).
@@ -17,7 +17,7 @@
 - **We do not store your questions.** The server's logs carry neither the question text nor your address.
 - **Network log, 7 days.** The web server in front (nginx) logs the caller's address (IP), the time,
   the path without the query part and the status code. It is deleted after 7 days. We need it to
-  protect the service against abuse (for example the limit of 30 requests a minute).
+  protect the service against abuse (for example the limit of 60 requests a minute).
 - **Our server never calls an AI** and shares your data with no one. Your assistant writes the answer;
   your conversation is kept under the rules of the company whose assistant you use (Anthropic, OpenAI,
   Google and others).

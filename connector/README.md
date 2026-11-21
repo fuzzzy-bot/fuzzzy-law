@@ -90,7 +90,7 @@ wordings of that law begin after the decision.
   address; an unexpected error is logged as its type and code location only.
 - nginx in front logs the caller's network address and the path without the query string, kept seven
   days (`backend/scripts/nginx.connector.conf.example`, `logrotate.connector.example`).
-- 30 requests a minute per caller address (IPv6 counted by /64), counted in memory. Networks AI
+- 60 requests a minute per caller address (IPv6 counted by /64), counted in memory. Networks AI
   providers call from on behalf of many people (`CONNECTOR_SHARED_IP_RANGES`) share a higher limit.
 - Request bodies over 64 KB, or without a declared length, are refused.
 
@@ -119,7 +119,7 @@ needs a database server, Redis, a vector store or a model key.
 | `CONNECTOR_DATA_DIR` | unset | folder with the three data files and `status.json`; unset = `./data` |
 | `CONNECTOR_PUBLIC_BASE_URL` | `http://localhost:8000` | public origin; goes into the OpenAPI `servers` and the coverage page |
 | `CONNECTOR_ACCESS_MODE` | `open` | `open` (limit per caller address) or `api_key` (per-user quotas) |
-| `CONNECTOR_RATE_LIMIT_PER_MINUTE` | `30` | per caller |
+| `CONNECTOR_RATE_LIMIT_PER_MINUTE` | `60` | per caller |
 | `CONNECTOR_SHARED_IP_RANGES` | empty | networks (CIDR) of AI providers calling for many people at once |
 | `CONNECTOR_SHARED_RATE_LIMIT_PER_MINUTE` | `600` | limit for one address inside those networks |
 | `CONNECTOR_MAX_BODY_BYTES` | `65536` | largest request body accepted |

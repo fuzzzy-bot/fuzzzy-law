@@ -80,7 +80,8 @@ phone numbers could not all be confirmed because some official sites did not ans
 
 ## Request limits
 
-One address can make 30 requests a minute (counted over the last 60 seconds, IPv6 by /64). AI
+One address can make 60 requests a minute (counted over the last 60 seconds, IPv6 by /64). AI
 providers that call for many people from the same networks get 600 a minute per address. Request
-bodies are limited to 64 KB. The reliability check met the limit five times while calling about once
-every 2 seconds.
+bodies are limited to 64 KB. The limit was 30 until 2026-11-21: the reliability check met it five
+times while calling about once a second, and a full case analysis uses about 20 calls in two minutes,
+so it was raised to leave room for fast clients and for several people behind one address.

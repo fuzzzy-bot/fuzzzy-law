@@ -65,7 +65,7 @@ matsne.gov.ge-ის ოფიციალური ბმულით და �
 - ძველი თარიღისთვის სერვისი matsne-ის იმ რედაქციას აბრუნებს, რომლის თარიღიც იმ დღეს ან მანამდეა.
   ცვლილება შეიძლება მოგვიანებით ამოქმედდა.
 - შენი ასისტენტი შეიძლება შეცდეს, მაშინაც კი, როცა წყარო სწორია. ყოველთვის გადაამოწმე ბმული.
-- ერთ მისამართს წუთში 30 მოთხოვნა შეუძლია.
+- ერთ მისამართს წუთში 60 მოთხოვნა შეუძლია.
 
 ### ჩვენ იურისტები არ ვართ
 
@@ -142,7 +142,7 @@ are not yet updated automatically: new collections are added by hand. Details:
 - For a past date the service returns the newest matsne version dated on or before that day. A change
   in it may have taken effect later.
 - Your assistant can still make mistakes even when the source is right. Always open the link.
-- One address can make 30 requests a minute.
+- One address can make 60 requests a minute.
 
 ### We are not lawyers
 
