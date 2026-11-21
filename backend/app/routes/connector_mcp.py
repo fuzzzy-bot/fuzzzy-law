@@ -73,7 +73,9 @@ TOOL_DESCRIPTIONS = {
     ),
     "search_law": (
         "Search Georgian law articles by words. Search in Georgian, with the terms the law "
-        "itself uses. Returns matching articles with an exact text snippet, code, article "
+        "itself uses; if the results are off the point, search again with the law's own word "
+        "and ignore also_searched terms that do not fit. Returns matching articles with an "
+        "exact text snippet, code, article "
         "number, official matsne.gov.ge link and version date. found=false means nothing "
         "matched: say so, never guess. კანონის მუხლების ძიება სიტყვებით: ზუსტი ამონარიდი, "
         "კოდექსი, მუხლის ნომერი, ოფიციალური ბმული და თარიღი."
@@ -81,9 +83,10 @@ TOOL_DESCRIPTIONS = {
     "get_article": (
         "Get the full exact text of one article, with its paragraphs, official link, "
         "version date and the previous and next article. Use it to check deadlines, "
-        "amounts and ages before stating them. Pass as_of (a date) to read the wording "
-        "that stood on that day. ერთი მუხლის სრული ზუსტი ტექსტი, ოფიციალური ბმული და "
-        "რედაქციის თარიღი; as_of თარიღით მიიღებ იმ დღის რედაქციას."
+        "amounts and ages before stating them. Pass as_of (a date) for the newest matsne "
+        "version dated on or before that day; its changes may have taken effect later, so "
+        "give the version date. ერთი მუხლის სრული ზუსტი ტექსტი, ოფიციალური ბმული და "
+        "რედაქციის თარიღი; as_of თარიღით მიიღებ იმ დღემდე ბოლო რედაქციას."
     ),
     "list_changes": (
         "List the articles of a law that were amended, added or removed since a date, by "
@@ -98,9 +101,11 @@ TOOL_DESCRIPTIONS = {
     "find_court_practice": (
         "Find real decisions of Georgian courts on an issue: case number, court, date, "
         "exact snippet and link when stored. get_coverage lists the courts held; pass court "
-        "to search one of them only. status none_found or source_unavailable means you "
-        "must not mention court practice. სასამართლო პრაქტიკა: რეალური "
-        "გადაწყვეტილებები, საქმის ნომერი, თარიღი."
+        "to search one of them only. Read a decision with get_court_decision before you "
+        "describe it. With status none_found, say in one line that no published decision "
+        "was found in the collections held, up to decisions_through, and that this does "
+        "not mean none exists. სასამართლო პრაქტიკა: რეალური გადაწყვეტილებები, საქმის "
+        "ნომერი, თარიღი."
     ),
     "get_court_decision": (
         "Read a stored court decision in full, twenty passages per call, by the id from "
@@ -111,7 +116,8 @@ TOOL_DESCRIPTIONS = {
     ),
     "verify_citation": (
         "Check a citation: does the article (and paragraph) exist, is it repealed, and what "
-        "does it actually say. Pass quote to check a quotation word for word. Includes a "
+        "does it actually say. Pass quote to check a quotation word for word; the quote is "
+        "looked for in the whole article, not only the paragraph named. Includes a "
         "word-and-number overlap check, not a legal judgement. ციტატის შემოწმება: არსებობს "
         "თუ არა მუხლი, რას ამბობს სინამდვილეში და ზუსტია თუ არა მოყვანილი ციტატა."
     ),
@@ -172,8 +178,8 @@ DateArg = Annotated[str, Field(
     max_length=MAX_DATE_CHARS, description="A date as YYYY-MM-DD, e.g. 2025-03-01."
 )]
 OptionalDate = Annotated[str | None, Field(max_length=MAX_DATE_CHARS, description=(
-    "Optional date as YYYY-MM-DD: return the wording that stood on that day instead of "
-    "the current one."
+    "Optional date as YYYY-MM-DD: return the newest matsne version dated on or before "
+    "that day instead of the current one (its changes may have taken effect later)."
 ))]
 SituationArg = Annotated[str, Field(
     max_length=MAX_SITUATION_CHARS, description="What happened, in your own words."

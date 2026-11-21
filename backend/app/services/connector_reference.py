@@ -186,8 +186,8 @@ DATA_SOURCES = {
         "how_collected": (
             "Every consolidated version matsne publishes for a law since the version in "
             "force at the start of 2016 (later for laws adopted later) is downloaded from its "
-            "own official page and stored article by article, so an article can be read as "
-            "it stood on a given date. " + POLITE_COLLECTION
+            "own official page and stored article by article, so an article can be read in "
+            "the newest version dated on or before a given day. " + POLITE_COLLECTION
         ),
         "how_kept_current": (
             "Each night a new version of a law found on matsne is added. Stored earlier "

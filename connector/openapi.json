@@ -179,10 +179,10 @@
                   "type": "null"
                 }
               ],
-              "description": "Optional date (YYYY-MM-DD): the wording that stood on that day.",
+              "description": "Optional date (YYYY-MM-DD): the newest matsne version dated on or before that day.",
               "title": "As Of"
             },
-            "description": "Optional date (YYYY-MM-DD): the wording that stood on that day."
+            "description": "Optional date (YYYY-MM-DD): the newest matsne version dated on or before that day."
           }
         ],
         "responses": {

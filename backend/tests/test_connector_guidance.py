@@ -16,10 +16,14 @@ from app.services.connector_guidance import (
     ANSWER_RULES_EN,
     ANSWER_RULES_KA,
     PROMPTS,
+    SEND_THIS_EN,
+    SEND_THIS_KA,
     SERVER_INSTRUCTIONS,
+    WORK_RULES,
     answer_rules_for_actions,
     claude_skill,
     render_prompt,
+    send_this_page,
 )
 
 INSTRUCTIONS_FILE = (
@@ -55,7 +59,9 @@ class TestServerInstructions:
     def test_names_only_tools_that_exist(self):
         import re
 
-        named = set(re.findall(r"\b[a-z]+(?:_[a-z]+)+\b", SERVER_INSTRUCTIONS)) - {"as_of"}
+        fields = {"as_of", "also_searched", "decisions_through", "version_date",
+                  "data_current_as_of", "none_found"}
+        named = set(re.findall(r"\b[a-z]+(?:_[a-z]+)+\b", SERVER_INSTRUCTIONS)) - fields
         assert named and named <= set(TOOL_DESCRIPTIONS)
 
 
@@ -87,9 +93,56 @@ class TestAnswerRules:
         for rules in (ANSWER_RULES_EN, ANSWER_RULES_KA):
             assert "კონსულტაცია / This is legal information" not in rules
 
-    def test_unsearched_court_practice_is_left_out_not_announced(self):
-        assert "including the remark that you did not look" in ANSWER_RULES_EN
-        assert "არც ის, რომ არ მოგიძიებია" in ANSWER_RULES_KA
+    def test_unsearched_court_practice_is_left_out(self):
+        assert "If you did not look court practice up, leave it out." in ANSWER_RULES_EN
+        assert "თუ პრაქტიკა არ მოგიძიებია, პასუხში არ ახსენო." in ANSWER_RULES_KA
+
+    def test_one_rule_for_no_decision_found_everywhere(self):
+        line = ("I found no published decision on this in the collections this service "
+                "holds, up to <decisions_through>; this does not mean none exists.")
+        assert line in SERVER_INSTRUCTIONS and line in ANSWER_RULES_EN and line in SEND_THIS_EN
+        assert "ეს არ ნიშნავს, რომ ასეთი არ არსებობს" in ANSWER_RULES_KA
+        assert "ეს არ ნიშნავს, რომ ასეთი არ არსებობს" in SEND_THIS_KA
+        court_tool = " ".join(TOOL_DESCRIPTIONS["find_court_practice"].split())
+        assert "does not mean none exists" in court_tool
+        for text in (SERVER_INSTRUCTIONS, ANSWER_RULES, SEND_THIS_EN, SEND_THIS_KA):
+            assert "must not mention court practice" not in text
+            assert "including the remark that you did not look" not in text
+
+    @pytest.mark.parametrize("phrase", [
+        "give 112 first", "also_searched", "on or before that day", "whole article",
+        "violence", "version_date", "data_current_as_of", "word for word",
+        "ეს არის სამართლებრივი ინფორმაცია და არა იურიდიული კონსულტაცია.",
+        "This is legal information, not legal advice.",
+    ])
+    def test_server_instructions_carry_the_essential_answer_rules(self, phrase: str):
+        assert phrase in " ".join(SERVER_INSTRUCTIONS.split())
+
+    def test_past_dates_are_not_promised_as_the_wording_in_force(self):
+        for text in (SERVER_INSTRUCTIONS, ANSWER_RULES_EN, TOOL_DESCRIPTIONS["get_article"]):
+            flat = " ".join(text.split())
+            assert "stood on that day" not in flat
+            assert "on or before that day" in flat
+
+
+class TestSendThis:
+    def test_both_languages_carry_the_same_rules(self):
+        english, georgian = _numbered_rules(SEND_THIS_EN), _numbered_rules(SEND_THIS_KA)
+        assert len(english) == len(georgian) == len(WORK_RULES)
+
+    def test_georgian_message_is_in_georgian(self):
+        letters = [ch for ch in SEND_THIS_KA if ch.isalpha()]
+        assert sum(ord(ch) in GEORGIAN for ch in letters) / len(letters) > 0.6
+
+    def test_message_is_built_from_the_server_rules(self):
+        for english, _ in WORK_RULES:
+            assert english in SERVER_INSTRUCTIONS and english in SEND_THIS_EN
+
+    @pytest.mark.parametrize("language", ["ka", "en"])
+    def test_committed_page_is_the_generated_one(self, language: str):
+        page = CONNECTOR_DIR.parent / "docs" / f"send-this.{language}.md"
+        assert page.read_text(encoding="utf-8") == send_this_page(language)
+        assert "https://law-api.fuzzzycore.com/mcp" in page.read_text(encoding="utf-8")
 
 
 class TestCustomGptInstructions:

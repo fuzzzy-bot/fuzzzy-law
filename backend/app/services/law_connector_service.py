@@ -457,7 +457,8 @@ class LawConnectorService:
     ) -> GetArticleResult:
         """Full exact article text with link, version and neighbouring articles.
 
-        ``as_of`` (an ISO date before today) gives the wording of that day instead.
+        ``as_of`` (an ISO date before today) gives the newest stored version dated on or
+        before that day instead.
         """
         asked = requested_article(article)
         if asked is None:
@@ -821,8 +822,8 @@ class LawConnectorService:
             return CourtPracticeResult(
                 query=query, status="source_unavailable", results=[],
                 message=(
-                    "Court decisions are not available on this server. Say that no court "
-                    "practice was checked; do not cite or describe any decision."
+                    "Court decisions are not available on this server. Say that the court "
+                    "collections could not be searched; do not cite or describe any decision."
                 ),
             )
         wanted = COURT_FILTERS.get(court) if court else None
@@ -846,16 +847,17 @@ class LawConnectorService:
                 query=query, status="none_found", results=[], decisions_through=through,
                 decisions_through_by_court=reach,
                 message=(
-                    "No court decision matched. Say so plainly; do not mention court practice "
-                    "or invent case numbers."
+                    "No decision matched. Write one line: I found no published decision on "
+                    "this in the collections this service holds, up to decisions_through; "
+                    "this does not mean none exists. Do not invent case numbers."
                 ),
             )
         return CourtPracticeResult(
             query=query, status="found", results=decisions, decisions_through=through,
             decisions_through_by_court=reach,
             message=(
-                "Quote only what the snippets say; cite the case number given and name the "
-                "court that decided."
+                "Before describing a decision, read it with get_court_decision; snippets "
+                "alone are not enough. Cite the case number given and name the court."
             ),
         )
 

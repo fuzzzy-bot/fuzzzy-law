@@ -184,8 +184,8 @@ assistant quotes the law instead of guessing it.</p>
 
 <h2 id="laws">Laws held</h2>
 <p class="note" id="laws-note">Each law is stored in its current consolidated version.
-Where earlier versions are stored, an article can also be read as it stood on an earlier
-date.</p>
+Where earlier versions are stored, an article can also be read in the newest version
+dated on or before an earlier day (a change can take effect later than its version date).</p>
 <div class="scroll"><table aria-labelledby="laws" aria-describedby="laws-note">
 <thead><tr><th scope="col">Law</th><th scope="col">Articles</th>
 <th scope="col">Version stored</th><th scope="col">Earlier wordings</th>

@@ -95,7 +95,9 @@ async def get_article(
     )] = None,
     as_of: Annotated[str | None, Query(
         max_length=MAX_DATE_CHARS,
-        description="Optional date (YYYY-MM-DD): the wording that stood on that day.",
+        description=(
+            "Optional date (YYYY-MM-DD): the newest matsne version dated on or before that day."
+        ),
     )] = None,
 ) -> GetArticleResult:
     """Full exact text, paragraphs, link, version date and neighbouring articles.
