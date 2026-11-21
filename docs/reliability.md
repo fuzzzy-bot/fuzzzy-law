@@ -42,17 +42,18 @@ did not find.
 ## A fresh assistant with only the send-this message (after the fixes)
 
 On 2026-11-21 a new Claude session (Claude Code, Sonnet model, no other tools, no web search) got only
-the connector and the [send-this message](send-this.en.md) before each question:
+the connector and the two-line [send-this message](send-this.en.md) before each question. How to
+answer came from the connector's own instructions.
 
 | Question | What it did | Quotations word for word |
 |---|---|---|
-| Dismissed yesterday with no reason given: how long to go to court? (Georgian) | Labour Code article 48, paragraphs 4 to 7, with link, version date and data date; said which date was its own count | 8 of 8 |
-| "Article 1661 of the Civil Code lets my landlord evict me within 24 hours" (a false premise) | Said article 1661 is not in the law and would not cite it; quoted Civil Code articles 562 and 561 instead | 3 of 3 |
-| The Tbilisi council's car-evacuation fee (outside what is held) | Said municipal acts are not held and gave no number; quoted the Administrative Offences Code article that lets the council set the fee | all |
+| Dismissed yesterday with no reason given: how long to go to court? (Georgian) | Labour Code article 48 with link, version date and data date: 30 days, and from which event they run | 8 of 8 law quotations (one more quoted phrase was its own shorthand) |
+| "Article 1661 of the Civil Code lets my landlord evict me within 24 hours" (a false premise) | Said article 1661 is not in the law and would not cite it; quoted Civil Code articles 562 and 561 instead | 8 of 8 |
+| The Tbilisi council's car-evacuation fee (outside what is held) | Said the council's decision is not held and gave no Tbilisi figure; quoted the Administrative Offences Code article that caps the fee (at most 300 lari to tow a car, 20 lari a day to store it) | 1 of 1 |
 
 Every link and version date in the answers came from the tools, and every answer ended with the
-not-legal-advice line. A full case analysis in the same setup used 20 connector calls in 108 seconds,
-under the request limit.
+not-legal-advice line. In an earlier run with a longer message, a full case analysis used 20 connector
+calls in 108 seconds, under the request limit.
 
 ## Known problems, not yet fixed
 
