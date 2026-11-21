@@ -1,0 +1,18 @@
+name: "გატეხილი ბმული · Broken link"
+description: "ბმული არ იხსნება ან სხვა ადგილას მიდის · A link does not open or goes to the wrong place"
+title: "[broken link] "
+labels: ["data", "broken-link"]
+body:
+  - type: input
+    id: link
+    attributes:
+      label: "ბმული · Link"
+    validations:
+      required: true
+  - type: textarea
+    id: where
+    attributes:
+      label: "სად ნახე და რა მოხდა? · Where did you see it and what happened?"
+      description: "მაგ. რომელი მუხლის ან გადაწყვეტილების ბმული, რა გაიხსნა · e.g. which article or decision, what opened instead"
+    validations:
+      required: true

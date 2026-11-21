@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  connector:
+    name: Connector tests and lint
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install --no-deps -r requirements-connector.txt -r requirements-dev.txt && pip check
+      - run: ruff check .
+      - run: pytest -q
+
+  data-pipeline:
+    name: Data pipeline tests and lint
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: law_corpus
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install --no-deps -r requirements-refresh.txt -r requirements-dev.txt && pip check
+      - run: ruff check .
+      - run: pytest -q
+
+  secret-scan:
+    name: Secret scan (gitleaks, all history)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run gitleaks
+        env:
+          GITLEAKS_VERSION: "8.30.1"
+        run: |
+          curl -sSfL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" | tar -xz gitleaks
+          ./gitleaks git . --redact --no-banner --exit-code 1
+
+  images:
+    name: Container images build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -f backend/Dockerfile.connector -t fuzzzy-law-connector:ci backend
+      - run: docker build -f law_corpus/Dockerfile.refresh -t fuzzzy-law-refresh:ci law_corpus

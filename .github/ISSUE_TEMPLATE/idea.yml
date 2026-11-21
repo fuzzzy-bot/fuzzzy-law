@@ -1,0 +1,12 @@
+name: "იდეა ან ახალი კანონი · Idea or a missing law"
+description: "რა დავამატოთ ან გავაუმჯობესოთ · What to add or improve"
+title: "[idea] "
+labels: ["idea"]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: "იდეა · Idea"
+      description: "თუ კანონი აკლია, რომელი და რატომ გჭირდება · If a law is missing, which one and why you need it"
+    validations:
+      required: true

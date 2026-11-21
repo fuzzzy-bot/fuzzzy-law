@@ -1,0 +1,38 @@
+name: "არასწორი მუხლი · Wrong article"
+description: "მუხლის ტექსტი, ნომერი ან თარიღი არასწორადაა · An article's text, number or date is wrong"
+title: "[wrong article] "
+labels: ["data", "wrong-article"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        მადლობა! შენი პირადი საქმის დეტალები აქ ნუ დაწერ. · Thank you! Please do not write details of your own legal matter here.
+  - type: input
+    id: law
+    attributes:
+      label: "კანონი · Law"
+      placeholder: "მაგ. შრომის კოდექსი · e.g. Labour Code"
+    validations:
+      required: true
+  - type: input
+    id: article
+    attributes:
+      label: "მუხლი (და პუნქტი) · Article (and paragraph)"
+      placeholder: "48, პუნქტი 4"
+    validations:
+      required: true
+  - type: textarea
+    id: wrong
+    attributes:
+      label: "რა არის არასწორი? · What is wrong?"
+      description: "რა თქვა სერვისმა ან ასისტენტმა და რა წერია matsne.gov.ge-ზე · What the service or the assistant said, and what matsne.gov.ge says"
+    validations:
+      required: true
+  - type: input
+    id: link
+    attributes:
+      label: "matsne.gov.ge ბმული · link (optional)"
+  - type: input
+    id: date
+    attributes:
+      label: "როდის შენიშნე? · When did you see it?"

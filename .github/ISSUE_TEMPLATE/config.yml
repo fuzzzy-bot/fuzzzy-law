@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: "უსაფრთხოების პრობლემა · Security problem"
+    url: https://github.com/fuzzzy-bot/fuzzzy-law/security/advisories/new
+    about: "პირადად შეგვატყობინე · Report it privately"
+  - name: "კითხვა ან წაშლის მოთხოვნა · Question or removal request"
+    url: mailto:support@fuzzzycore.com
+    about: "მოგვწერე · Write to support@fuzzzycore.com"
+  - name: "უფასო იურიდიული დახმარება · Free legal help"
+    url: https://law.fuzzzycore.com/#help
+    about: "ჩვენ იურისტები არ ვართ; აქ არის კონტაქტები · We are not lawyers; contacts are here"
