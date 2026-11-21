@@ -125,6 +125,7 @@ needs a database server, Redis, a vector store or a model key.
 | `CONNECTOR_MAX_BODY_BYTES` | `65536` | largest request body accepted |
 | `CONNECTOR_STALE_AFTER_DAYS` | `3` | days without a successful matsne check before every answer carries a warning |
 | `CONNECTOR_ALLOWED_HOSTS` | empty | Host values `/mcp` accepts (DNS-rebinding protection) |
+| `CONNECTOR_CORS_ORIGINS` | empty | web origins allowed to read `/api/v1/connector/coverage` from a browser (the compose file sets the project website) |
 | `CONNECTOR_DAILY_QUOTA` | `1000` | key mode: requests a day per key holder |
 | `CONNECTOR_API_KEYS_FILE` | `connector_api_keys.json` | key mode: `{"<sha256 of key>": {"user": "...", "daily_quota": N}}`, hashes only |
 
