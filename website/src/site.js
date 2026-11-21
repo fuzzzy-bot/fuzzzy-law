@@ -143,8 +143,11 @@
 
   function apply(summary) {
     if (!summary) return;
-    var values = { laws: summary.laws, articles: summary.articles };
-    Object.keys(summary.courts).forEach(function (k) { values[k] = summary.courts[k]; });
+    var values = { laws: summary.laws, articles: summary.articles, decisions: 0 };
+    Object.keys(summary.courts).forEach(function (k) {
+      values[k] = summary.courts[k];
+      values.decisions += summary.courts[k];
+    });
     Array.prototype.forEach.call(document.querySelectorAll("[data-cov]"), function (el) {
       var key = el.getAttribute("data-cov");
       if (key === "asof") {

@@ -2,7 +2,13 @@
 
 The home page of Fuzzzy Law at https://law.fuzzzycore.com (also https://fuzzzylaw.web.app):
 Georgian at `/`, English at `/en/`. Static HTML, one stylesheet, one small script, self-hosted
-fonts. It works without JavaScript; the script only adds the copy buttons, the theme switch and
+fonts.
+
+What a visitor sees without opening anything: one line on what it is, a picture of how it works,
+three steps each with its action (copy the address, pick your assistant, copy the two-line
+message), an example answer, the live numbers, and a short safety strip. Everything longer (each
+assistant's full steps, how it works, how fresh the data is, what is held, limits, privacy, all
+free-help contacts, contributing) sits in closed sections that open on a tap. It works without JavaScript; the script only adds the copy buttons, the theme switch and
 a refresh of the numbers. No cookies, no trackers, no requests to other sites except the
 connector's coverage endpoint.
 
@@ -36,7 +42,9 @@ python3 build.py --offline --no-our-gui  # the same, reusing the last coverage a
 
 The build fetches https://law-api.fuzzzycore.com/api/v1/connector/coverage once and writes the
 numbers and dates into the pages (saved in `.cache/coverage.json`; `--coverage FILE` uses a saved
-answer instead). In the browser the page asks the same endpoint again at most once every six
+answer instead). It also fetches the article the example answer quotes (Labour Code, article 48,
+paragraph 4) from the connector, so the example shows its real text, link and version date; it
+stops if that paragraph no longer says what the example's summary line says. In the browser the page asks the same endpoint again at most once every six
 hours; when it cannot reach it, the numbers from the build stay, with their date.
 
 The build stops if the "How it stays current" facts no longer match what the connector reports,

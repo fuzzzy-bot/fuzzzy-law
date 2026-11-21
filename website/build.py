@@ -8,14 +8,16 @@ the same files.
                                           # to finish without the old app (see --our-gui)
     python3 build.py --our-gui PATH       # also copy the old Flutter app's web build to /our-gui/
     python3 build.py --no-our-gui         # build the home page only (local preview)
-    python3 build.py --offline            # reuse the last fetched coverage (.cache/coverage.json)
+    python3 build.py --offline            # reuse the last fetched answers (.cache/)
     python3 build.py --coverage FILE      # use a saved coverage answer instead of fetching
 
 What it does:
   1. Copies the CSS, the script and the fonts to dist/assets/ with a content hash in each
      name, so they can be cached for a year.
   2. Fetches the connector's coverage once and writes the numbers and dates into the pages.
-     The pages may refresh the numbers later in the browser; these are the fallback.
+     The pages may refresh the numbers later in the browser; these are the fallback. Also
+     fetches the article the example answer quotes (Labour Code, article 48, paragraph 4), so
+     the example always shows the connector's real text, link and version date.
   3. Puts the "send this to your assistant" message into the pages, taken from
      ../docs/send-this.ka.md and ../docs/send-this.en.md (the text between the first
      ```text fence pair). Until those files exist, an obvious placeholder is shown.
@@ -51,6 +53,11 @@ EN_MONTHS = ["January", "February", "March", "April", "May", "June", "July", "Au
 # Facts the "How it stays current" text states; the build stops if the connector says otherwise.
 EXPECTED_FACTS = ["01:17 UTC", "50 stored articles", "after 3 days", "10 seconds apart"]
 
+# The example answer quotes this paragraph. Its one-line summary on the pages says "30 calendar
+# days"; the build stops if the paragraph no longer says so.
+EXAMPLE = {"code": "labour_code", "article": "48", "paragraph": "4",
+           "must_contain": "30 კალენდარული დღის ვადაში"}
+
 COPY_ICONS = (
     '<span class="btn__icons" aria-hidden="true">'
     '<svg class="ic" viewBox="0 0 24 24" focusable="false" data-icon-idle>'
@@ -58,8 +65,28 @@ COPY_ICONS = (
     '<svg class="ic" viewBox="0 0 24 24" focusable="false" data-icon-done>'
     '<path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>'
 )
-CHEVRON = ('<svg class="ic acc__chev" viewBox="0 0 24 24" aria-hidden="true" focusable="false">'
+CHEVRON = ('<svg class="ic chev" viewBox="0 0 24 24" aria-hidden="true" focusable="false">'
            '<path d="M6 9l6 6 6-6"/></svg>')
+# The "how it works" picture: thin-line icons and arrows. Each arrow has a wide-screen form
+# (left to right) and a phone form (top to bottom); CSS shows one.
+CHAT = ('<svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false">'
+        '<path d="M4 5h16v11H10l-5 4v-4H4z"/><path d="M8 9h8M8 12h5"/></svg>')
+DOC = ('<svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false">'
+       '<path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5M9 12h7M9 15h7M9 18h4"/></svg>')
+ARROWS_BOTH = (
+    '<span class="flow__arrows" aria-hidden="true">'
+    '<svg class="ic flow__h" viewBox="0 0 96 28" focusable="false">'
+    '<path d="M4 8h84M80 3l8 5-8 5"/><path d="M92 20H8M16 15l-8 5 8 5"/></svg>'
+    '<svg class="ic flow__v" viewBox="0 0 28 64" focusable="false">'
+    '<path d="M8 4v52M3 48l5 8 5-8"/><path d="M20 60V8M15 16l5-8 5 8"/></svg></span>'
+)
+ARROW_BACK = (
+    '<span class="flow__arrows" aria-hidden="true">'
+    '<svg class="ic flow__h" viewBox="0 0 96 28" focusable="false">'
+    '<path d="M92 14H8M16 9l-8 5 8 5"/></svg>'
+    '<svg class="ic flow__v" viewBox="0 0 28 64" focusable="false">'
+    '<path d="M14 60V8M9 16l5-8 5 8"/></svg></span>'
+)
 
 SEND_PLACEHOLDER = {
     "ka": "[ჩანაცვლების ადგილი: აქ იქნება მზა შეტყობინება. ის docs/send-this.ka.md ფაილიდან ჩაისმება.]",
@@ -106,13 +133,13 @@ def format_date(iso: str, lang: str) -> str:
 
 # ---------------------------------------------------------------- coverage
 
-def load_coverage(args: argparse.Namespace, url: str) -> dict:
-    cached = CACHE / "coverage.json"
-    if args.coverage:
-        raw = Path(args.coverage).read_bytes()
-    elif args.offline:
+def fetch_json(url: str, cache_name: str, offline: bool, given: str | None = None) -> dict:
+    cached = CACHE / cache_name
+    if given:
+        raw = Path(given).read_bytes()
+    elif offline:
         if not cached.exists():
-            fail("--offline needs .cache/coverage.json from an earlier build")
+            fail(f"--offline needs .cache/{cache_name} from an earlier build")
         raw = cached.read_bytes()
     else:
         request = urllib.request.Request(url, headers={"Accept": "application/json",
@@ -121,14 +148,34 @@ def load_coverage(args: argparse.Namespace, url: str) -> dict:
             with urllib.request.urlopen(request, timeout=30) as response:
                 raw = response.read()
         except OSError as error:
-            fail(f"could not fetch the coverage ({error}); use --offline or --coverage FILE")
+            fail(f"could not fetch {url} ({error}); use --offline")
         CACHE.mkdir(exist_ok=True)
         cached.write_bytes(raw)
     try:
         return json.loads(raw)
     except ValueError:
-        fail("the coverage answer is not JSON")
+        fail(f"the answer from {url} is not JSON")
     return {}
+
+
+def load_coverage(args: argparse.Namespace, url: str) -> dict:
+    return fetch_json(url, "coverage.json", args.offline, args.coverage)
+
+
+def load_example(args: argparse.Namespace, coverage_url: str) -> dict:
+    api = coverage_url.split("/api/", 1)[0]
+    url = f"{api}/api/v1/connector/articles?code={EXAMPLE['code']}&article={EXAMPLE['article']}"
+    data = fetch_json(url, "example-article.json", args.offline)
+    article = data.get("article") or {}
+    match = re.search(rf"(?m)^{EXAMPLE['paragraph']}\. (.+)$", article.get("text", ""))
+    if not data.get("found") or not match:
+        fail("the example article or its paragraph is missing from the connector's answer")
+    quote = match.group(1).strip()
+    if EXAMPLE["must_contain"] not in quote:
+        fail("the example paragraph changed; update the example's summary line on both pages, "
+             "then EXAMPLE['must_contain']")
+    return {"quote": quote, "url": article["source_url"], "version_iso": article["version_date"],
+            "law": article["code_name"]}
 
 
 def coverage_values(cov: dict, lang: str, names_en: dict) -> dict:
@@ -162,6 +209,7 @@ def coverage_values(cov: dict, lang: str, names_en: dict) -> dict:
     }
     for key in ("court_practice", "grand_chamber", "constitutional_court"):
         values[key] = format_number(int(by_collection[key]["decision_count"]), lang)
+    values["decisions"] = format_number(sum(int(row["decision_count"]) for row in courts), lang)
     if cov.get("freshness_warning"):
         warn("the connector reports stale data; the page shows its warning")
 
@@ -236,7 +284,8 @@ def render(template: str, lang: str, assets: dict, values: dict, extra: dict) ->
         if kind == "law_list":
             return values["law_list"]
         if kind == "icons":
-            return {"copy": COPY_ICONS, "chevron": CHEVRON}[arg]
+            return {"copy": COPY_ICONS, "chevron": CHEVRON, "chat": CHAT, "doc": DOC,
+                    "arrows-both": ARROWS_BOTH, "arrow-back": ARROW_BACK}[arg]
         if kind in extra:
             value = extra[kind]
             return value(arg) if callable(value) else value
@@ -252,7 +301,8 @@ def render(template: str, lang: str, assets: dict, values: dict, extra: dict) ->
 
 
 def section_ids(page: str) -> list[str]:
-    return re.findall(r'<section class="section" id="([a-z-]+)"', page)
+    """Every id in the page, in order: the two languages must have the same structure."""
+    return re.findall(r'\sid="([a-z0-9-]+)"', page)
 
 
 def build(args: argparse.Namespace) -> None:
@@ -264,6 +314,7 @@ def build(args: argparse.Namespace) -> None:
              "without it would remove /our-gui/ from the site.")
 
     coverage = load_coverage(args, settings["coverage_url"])
+    example = load_example(args, settings["coverage_url"])
 
     if DIST.exists():
         shutil.rmtree(DIST)
@@ -310,6 +361,12 @@ def build(args: argparse.Namespace) -> None:
             "send_this": send_block,
             "free_help": lambda _arg, block=help_block: block,
             "vendor_checked": format_date(settings["vendor_docs_checked"], lang),
+            "example": lambda arg, lang=lang: {
+                "quote": html.escape(example["quote"], quote=False),
+                "url": html.escape(example["url"]),
+                "version_iso": example["version_iso"],
+                "version_text": format_date(example["version_iso"], lang),
+            }[arg],
         }
         page = render((SRC / src_rel).read_text(encoding="utf-8"), lang, assets, values, extra)
         pages[lang] = page
