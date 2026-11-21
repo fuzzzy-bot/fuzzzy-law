@@ -392,6 +392,9 @@ def build(args: argparse.Namespace) -> None:
                  INDEXNOW_KEY_FILE):
         shutil.copyfile(SRC / name, DIST / name)
 
+    # Ownership proofs other services read from fixed addresses (the MCP Registry's public key).
+    shutil.copytree(SRC / ".well-known", DIST / ".well-known", dirs_exist_ok=True)
+
     # The sitemap tells search engines when the pages last changed: the build day.
     today = datetime.now(timezone.utc).date().isoformat()
     sitemap = (SRC / "sitemap.xml").read_text(encoding="utf-8")

@@ -3,7 +3,8 @@
     "site": "fuzzzylaw",
     "public": "dist",
     "ignore": [
-      "**/.*"
+      "**/.DS_Store",
+      "**/node_modules/**"
     ],
     "cleanUrls": false,
     "rewrites": [
@@ -119,6 +120,19 @@
           {
             "key": "Cache-Control",
             "value": "public, max-age=86400"
+          }
+        ]
+      },
+      {
+        "source": "/.well-known/**",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "text/plain; charset=utf-8"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=300"
           }
         ]
       }
