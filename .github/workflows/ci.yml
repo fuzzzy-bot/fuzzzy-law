@@ -16,7 +16,7 @@ jobs:
       run:
         working-directory: backend
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -31,7 +31,7 @@ jobs:
       run:
         working-directory: law_corpus
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -43,7 +43,7 @@ jobs:
     name: Secret scan (gitleaks, all history)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: Run gitleaks
@@ -57,6 +57,6 @@ jobs:
     name: Container images build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: docker build -f backend/Dockerfile.connector -t fuzzzy-law-connector:ci backend
       - run: docker build -f law_corpus/Dockerfile.refresh -t fuzzzy-law-refresh:ci law_corpus
